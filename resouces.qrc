@@ -1,0 +1,43 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/about.png</file>
+        <file>images/close.svg</file>
+        <file>images/max.svg</file>
+        <file>images/max1.svg</file>
+        <file>images/menu.svg</file>
+        <file>images/min.svg</file>
+        <file>images/sub_menu.svg</file>
+        <file>images/success_20px.svg</file>
+        <file>images/warning_30px.svg</file>
+        <file>images/loading.gif</file>
+        <file>images/loading/monitorloading_0.png</file>
+        <file>images/loading/monitorloading_1.png</file>
+        <file>images/loading/monitorloading_2.png</file>
+        <file>images/loading/monitorloading_3.png</file>
+        <file>images/loading/monitorloading_4.png</file>
+        <file>images/loading/monitorloading_5.png</file>
+        <file>images/loading/monitorloading_6.png</file>
+        <file>images/loading/monitorloading_7.png</file>
+        <file>images/loading/monitorloading_8.png</file>
+        <file>images/loading/monitorloading_9.png</file>
+        <file>images/loading/monitorloading_10.png</file>
+        <file>images/loading/monitorloading_11.png</file>
+        <file>images/loading/monitorloading_12.png</file>
+        <file>images/loading/monitorloading_13.png</file>
+        <file>images/loading/monitorloading_14.png</file>
+        <file>images/loading/monitorloading_15.png</file>
+        <file>images/loading/monitorloading_16.png</file>
+        <file>images/loading/monitorloading_17.png</file>
+        <file>images/loading/monitorloading_18.png</file>
+        <file>images/loading/monitorloading_19.png</file>
+        <file>images/loading/monitorloading_20.png</file>
+        <file>images/loading/monitorloading_21.png</file>
+        <file>images/loading/monitorloading_22.png</file>
+        <file>images/loading/monitorloading_23.png</file>
+        <file>images/loading/monitorloading_24.png</file>
+        <file>images/loading/monitorloading_25.png</file>
+        <file>images/passwordhide.svg</file>
+        <file>images/passwordshow.svg</file>
+        <file>images/utkwidget.svg</file>
+    </qresource>
+</RCC>
