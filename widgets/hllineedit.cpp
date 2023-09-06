@@ -1,6 +1,5 @@
 #include "hllineedit.h"
 #include "hllabel.h"
-#include "widgetutils.h"
 
 #include <QPainter>
 #include <QStyleOptionFrame>

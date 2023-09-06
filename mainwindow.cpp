@@ -5,8 +5,10 @@
 #include "widgets/hllistview.h"
 #include "widgets/hlmenu.h"
 #include "widgets/hlstylebutton.h"
+#include "uaboutdialog.h"
+#include "uapplication.h"
 
-#include "widgetutils.h"
+#include "uwidgetutils.h"
 #include "titleswidget.h"
 #include "titlebar.h"
 
@@ -119,7 +121,7 @@ void MainWindow::initListView()
     for (int i = 0; i < textList.size(); i++)
     {
         QStandardItem* item = new QStandardItem(textList.at(i));
-        item->setIcon(WidgetUtils::getNumCircleIcon(i + 1, QFont("SimHei", 14)));
+        item->setIcon(UWidgetUtils::getNumCircleIcon(i + 1, QFont("SimHei", 14)));
         item->setSizeHint(QSize(160, 50));
         model->appendRow(item);
     }
@@ -158,16 +160,23 @@ void MainWindow::initConnection()
 
 void MainWindow::handleAbout()
 {
-    MessageBox customMsgBox;
-    customMsgBox.setWindowTitle(tr("关于本软件"));
-    StyleButton* styleButton = new StyleButton(tr("好的"), this);
-    styleButton->setRadius(8);
-    customMsgBox.addButton(styleButton, QMessageBox::ActionRole);
-    customMsgBox.setIconPixmap(QPixmap(":/images/about.png").scaled(80, 80, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-    customMsgBox.setText(tr("欢迎使用Qt-Demo软件"));
-    customMsgBox.setTextFont(QFont("SimHei", 10));
-    customMsgBox.setTextWordWrap(true);
-    customMsgBox.exec();
+    //    MessageBox customMsgBox;
+    //    customMsgBox.setWindowTitle(tr("关于本软件"));
+    //    StyleButton* styleButton = new StyleButton(tr("好的"), this);
+    //    styleButton->setRadius(8);
+    //    customMsgBox.addButton(styleButton, QMessageBox::ActionRole);
+    //    customMsgBox.setIconPixmap(QPixmap(":/images/about.png").scaled(80, 80, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+    //    customMsgBox.setText(tr("欢迎使用Qt-Demo软件"));
+    //    customMsgBox.setTextFont(QFont("SimHei", 10));
+    //    customMsgBox.setTextWordWrap(true);
+    //    customMsgBox.exec();
+    UAboutDialog dialog(this);
+    dialog.setAppIcon(uApp->windowIcon());
+    dialog.setAppVersion(QString("Version: %1").arg(uApp->applicationVersion()));
+    dialog.setAppName(uApp->applicationName());
+    dialog.setAppDescribe("this is a utkwidget");
+    dialog.setAppHomePage("https://www.baidu.com");
+    dialog.exec();
 }
 
 void MainWindow::handleQuit()

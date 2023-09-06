@@ -1,33 +1,33 @@
 #include "mainwindow.h"
-#include "singleapplication/qtsingleapplication.h"
+#include "uapplication.h"
 
 #include <QIcon>
 #include <QDebug>
 
 int main(int argc, char* argv[])
 {
-    QtSingleApplication a(argc, argv);
+    UApplication app("UTK", argc, argv);
 
-    if (a.isRunning())
+    if (app.isRunning())
     {
-        return !a.sendMessage("Application is Running");
+        return !app.sendMessage("Application is Running");
     }
 
-    a.setWindowIcon(QIcon(":/images/utkwidget.svg"));
-    a.setApplicationName(QObject::tr("UTK"));
-    a.setApplicationVersion("1.0");
+    app.setWindowIcon(QIcon(":/images/utkwidget.svg"));
+    app.setApplicationName(QObject::tr("UTK"));
+    app.setApplicationVersion("1.0");
+
+    QString name = app.applicationDirPath() + QString("/%1.log").arg(app.applicationName());
+    app.initApplicationLog(name);
+    app.setLogLevel(simplelog::Logger::LogLevel::Info);
+
+    qInfo() << "========== Application is start ==========" << Qt::endl;
 
     MainWindow w;
     w.setMinimumSize(1200, 800);
-    a.setActivationWindow(&w);
+    app.setActivationWindow(&w);
     w.moveToCenter();
     w.show();
 
-    QObject::connect(&a, &QtSingleApplication::messageReceived, &w, [&a](const QString & message)
-    {
-        qDebug() << "message:" << message;
-        a.activationWindow();
-    });
-
-    return a.exec();
+    return app.exec();
 }

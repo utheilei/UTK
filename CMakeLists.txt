@@ -33,6 +33,7 @@ FILE(GLOB HEADERS
     ${CMAKE_SOURCE_DIR}/style/*.h
     ${CMAKE_SOURCE_DIR}/effect/*.h
     ${CMAKE_SOURCE_DIR}/singleapplication/*.h
+    ${CMAKE_SOURCE_DIR}/logger/*.h
 )
 
 FILE(GLOB SOURCES
@@ -41,6 +42,7 @@ FILE(GLOB SOURCES
     ${CMAKE_SOURCE_DIR}/style/*.cpp
     ${CMAKE_SOURCE_DIR}/effect/*.cpp
     ${CMAKE_SOURCE_DIR}/singleapplication/*.cpp
+    ${CMAKE_SOURCE_DIR}/logger/*.cpp
 )
 
 
