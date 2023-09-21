@@ -49,6 +49,7 @@ void UAboutDialogPrivate::init()
     linkLabel->setObjectName("AboutDialog_link");
     linkLabel->setOpenExternalLinks(true);
     QVBoxLayout* layout = new QVBoxLayout;
+    layout->setContentsMargins(9, 9, 9, 19);
     layout->addWidget(iconLabel, 0, Qt::AlignHCenter);
     layout->addWidget(nameLabel, 0, Qt::AlignHCenter);
     layout->addWidget(versionLabel, 0, Qt::AlignHCenter);

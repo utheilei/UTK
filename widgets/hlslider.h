@@ -7,10 +7,10 @@ class HLSlider : public QSlider
 {
     Q_OBJECT
 public:
-    explicit HLSlider(QWidget *parent = nullptr);
+    explicit HLSlider(QWidget* parent = nullptr);
 
 protected:
-    void mousePressEvent(QMouseEvent *ev) override;
+    void mousePressEvent(QMouseEvent* ev) override;
 };
 
 #endif // HLSLIDER_H

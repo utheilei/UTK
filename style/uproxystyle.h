@@ -9,6 +9,36 @@ class UProxyStyle : public QProxyStyle
     Q_OBJECT
 
 public:
+    enum UPrimitiveElement
+    {
+        PE_ItemBackground = QStyle::PE_CustomBase + 100
+    };
+    Q_ENUM(UPrimitiveElement)
+
+    enum UControlElement
+    {
+        CE_UIconButton = QStyle::CE_CustomBase + 100
+    };
+    Q_ENUM(UControlElement)
+
+    enum UPixelMetric
+    {
+        PM_FocusBorderWidth = QStyle::PM_CustomBase + 100,        //控件焦点状态的边框宽度
+        PM_FocusBorderSpacing,                                  //控件内容和border之间的间隔
+        PM_FrameRadius,                                         //控件的圆角大小
+        PM_ShadowRadius,                                        //控件阴影效果的半径
+        PM_FrameMargins                                         //控件的margins区域，控件内容 = 控件大小 - FrameMargins
+    };
+    Q_ENUM(UPixelMetric)
+
+    enum UComplexControl
+    {
+        CC_USlider = QStyle::CC_CustomBase + 100,
+        CC_UScrollBar
+    };
+    Q_ENUM(UComplexControl)
+
+
     UProxyStyle();
     ~UProxyStyle() override;
 
@@ -23,17 +53,24 @@ public:
     void drawControl(ControlElement element, const QStyleOption* option,
                      QPainter* painter, const QWidget* widget) const override;
 
+    void drawControl(UControlElement element, const QStyleOption* option,
+                     QPainter* painter, const QWidget* widget) const;
+
     void drawPrimitive(PrimitiveElement element, const QStyleOption* option,
                        QPainter* painter, const QWidget* widget = nullptr) const override;
+
+    void drawPrimitive(UPrimitiveElement element, const QStyleOption* option,
+                       QPainter* painter, const QWidget* widget = nullptr) const;
 
     void drawComplexControl(ComplexControl control, const QStyleOptionComplex* option,
                             QPainter* painter, const QWidget* widget = nullptr) const override;
 
+    void drawComplexControl(UComplexControl control, const QStyleOptionComplex* option,
+                            QPainter* painter, const QWidget* widget = nullptr) const;
+
     QSize sizeFromContents(ContentsType type, const QStyleOption* option,
                            const QSize &contentsSize, const QWidget* widget = nullptr) const override;
 private:
-    void drawScroller(const QStyleOption* option, QPainter* painter) const;
-
     void drawMenuItem(const QStyleOptionMenuItem* menuItem,
                       QPainter* painter) const;
 

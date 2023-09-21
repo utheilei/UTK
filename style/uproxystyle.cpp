@@ -63,6 +63,8 @@ int UProxyStyle::pixelMetric(QStyle::PixelMetric metric,
             return 0;
         case QStyle::PM_SliderLength:
             return 30;
+        case PM_ScrollBarExtent:
+            return 8;
         default:
             return QProxyStyle::pixelMetric(metric, option, widget);
     }
@@ -73,7 +75,11 @@ void UProxyStyle::drawControl(QStyle::ControlElement element,
                               QPainter* painter,
                               const QWidget* widget) const
 {
-    //    QProxyStyle::drawControl(element,option,painter,widget);
+    if (element > QStyle::CE_CustomBase)
+    {
+        drawControl(static_cast<UControlElement>(element), option, painter, widget);
+        return;
+    }
     switch (element)
     {
         case CE_MenuTearoff:
@@ -114,12 +120,21 @@ void UProxyStyle::drawControl(QStyle::ControlElement element,
     }
 }
 
+void UProxyStyle::drawControl(UControlElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const
+{
+
+}
+
 void UProxyStyle::drawPrimitive(QStyle::PrimitiveElement element,
                                 const QStyleOption* option,
                                 QPainter* painter,
                                 const QWidget* widget) const
 {
-    //    QProxyStyle::drawPrimitive(element, option, painter, widget);
+    if (element > QStyle::PE_CustomBase)
+    {
+        drawPrimitive(static_cast<UPrimitiveElement>(element), option, painter, widget);
+        return;
+    }
     switch (element)
     {
         case QStyle::PE_FrameMenu: //整个菜单widget的边框色
@@ -160,15 +175,31 @@ void UProxyStyle::drawPrimitive(QStyle::PrimitiveElement element,
     }
 }
 
+void UProxyStyle::drawPrimitive(UPrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const
+{
+
+}
+
 void UProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex* option, QPainter* painter, const QWidget* widget) const
+{
+    if (control > QStyle::CC_CustomBase)
+    {
+        drawComplexControl(static_cast<UComplexControl>(control), option, painter, widget);
+        return;
+    }
+
+
+    QProxyStyle::drawComplexControl(control, option, painter, widget);
+}
+
+void UProxyStyle::drawComplexControl(UComplexControl control, const QStyleOptionComplex* option, QPainter* painter, const QWidget* widget) const
 {
     switch (control)
     {
-        case QStyle::ComplexControl::CC_Slider:
+        case CC_USlider:
             if (const QStyleOptionSlider* styleOptionSlider = qstyleoption_cast<const QStyleOptionSlider*>(option))
             {
                 QRect grooveRect = subControlRect(CC_Slider, styleOptionSlider, SC_SliderGroove, widget);
-                qDebug() << "======" << grooveRect;
                 grooveRect = QRect(grooveRect.x(), grooveRect.y() + grooveRect.height() / 2 - 5, grooveRect.width(), 10);
                 QLinearGradient gradient(0, 0, grooveRect.width(), grooveRect.height());//y轴使用渐变
                 gradient.setColorAt(0.0, QColor("#0fd850"));
@@ -186,117 +217,46 @@ void UProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyl
                 painter->drawEllipse(handleRect);
             }
             break;
-        case CC_ScrollBar:
+        case CC_UScrollBar:
             if (const QStyleOptionSlider* scrollbar = qstyleoption_cast<const QStyleOptionSlider*>(option))
             {
-                qDebug() << "======QStyleOptionSlider" << scrollbar->rect;
-                // Make a copy here and reset it for each primitive.
-                QStyleOptionSlider newScrollbar = *scrollbar;
-                State saveFlags = scrollbar->state;
+                qreal opacity = painter->opacity();
+                painter->setRenderHint(QPainter::Antialiasing);
+                painter->setOpacity(1.0);
+                painter->fillRect(scrollbar->rect, option->palette.brush(QPalette::Window));
+                painter->setBrush(Qt::transparent);
+                painter->setPen(Qt::NoPen);
 
-                if (scrollbar->subControls & SC_ScrollBarSubLine)
-                {
-                    newScrollbar.state = saveFlags;
-                    newScrollbar.rect = proxy()->subControlRect(control, &newScrollbar, SC_ScrollBarSubLine, widget);
-                    //                    if (newScrollbar.rect.isValid())
-                    //                    {
-                    //                        if (!(scrollbar->activeSubControls & SC_ScrollBarSubLine))
-                    //                            newScrollbar.state &= ~(State_Sunken | State_MouseOver);
-                    //                        proxy()->drawControl(CE_ScrollBarSubLine, &newScrollbar, painter, widget);
-                    //                    }
-                }
-                if (scrollbar->subControls & SC_ScrollBarAddLine)
-                {
-                    newScrollbar.rect = scrollbar->rect;
-                    newScrollbar.state = saveFlags;
-                    newScrollbar.rect = proxy()->subControlRect(control, &newScrollbar, SC_ScrollBarAddLine, widget);
-                    //                    if (newScrollbar.rect.isValid())
-                    //                    {
-                    //                        if (!(scrollbar->activeSubControls & SC_ScrollBarAddLine))
-                    //                            newScrollbar.state &= ~(State_Sunken | State_MouseOver);
-                    //                        proxy()->drawControl(CE_ScrollBarAddLine, &newScrollbar, painter, widget);
-                    //                    }
-                }
-                if (scrollbar->subControls & SC_ScrollBarSubPage)
-                {
-                    newScrollbar.rect = scrollbar->rect;
-                    newScrollbar.state = saveFlags;
-                    newScrollbar.rect = proxy()->subControlRect(control, &newScrollbar, SC_ScrollBarSubPage, widget);
-                    if (newScrollbar.rect.isValid())
-                    {
-                        if (!(scrollbar->activeSubControls & SC_ScrollBarSubPage))
-                            newScrollbar.state &= ~(State_Sunken | State_MouseOver);
-                        //                        proxy()->drawControl(CE_ScrollBarSubPage, &newScrollbar, painter, widget);
-                        painter->setBrush(Qt::blue);
-                        painter->drawRoundedRect(newScrollbar.rect, 8, 8);
-                    }
-                }
-                if (scrollbar->subControls & SC_ScrollBarAddPage)
-                {
-                    newScrollbar.rect = scrollbar->rect;
-                    newScrollbar.state = saveFlags;
-                    newScrollbar.rect = proxy()->subControlRect(control, &newScrollbar, SC_ScrollBarAddPage, widget);
-                    if (newScrollbar.rect.isValid())
-                    {
-                        if (!(scrollbar->activeSubControls & SC_ScrollBarAddPage))
-                            newScrollbar.state &= ~(State_Sunken | State_MouseOver);
-                        //                        proxy()->drawControl(CE_ScrollBarAddPage, &newScrollbar, painter, widget);
-                        painter->setBrush(Qt::red);
-                        painter->drawRoundedRect(newScrollbar.rect, 8, 8);
-                    }
-                }
-                if (scrollbar->subControls & SC_ScrollBarFirst)
-                {
-                    newScrollbar.rect = scrollbar->rect;
-                    newScrollbar.state = saveFlags;
-                    newScrollbar.rect = proxy()->subControlRect(control, &newScrollbar, SC_ScrollBarFirst, widget);
-                    //                    if (newScrollbar.rect.isValid())
-                    //                    {
-                    //                        if (!(scrollbar->activeSubControls & SC_ScrollBarFirst))
-                    //                            newScrollbar.state &= ~(State_Sunken | State_MouseOver);
-                    //                        proxy()->drawControl(CE_ScrollBarFirst, &newScrollbar, painter, widget);
-                    //                    }
-                }
-                if (scrollbar->subControls & SC_ScrollBarLast)
-                {
-                    newScrollbar.rect = scrollbar->rect;
-                    newScrollbar.state = saveFlags;
-                    newScrollbar.rect = proxy()->subControlRect(control, &newScrollbar, SC_ScrollBarLast, widget);
-                    //                    if (newScrollbar.rect.isValid())
-                    //                    {
-                    //                        if (!(scrollbar->activeSubControls & SC_ScrollBarLast))
-                    //                            newScrollbar.state &= ~(State_Sunken | State_MouseOver);
-                    //                        proxy()->drawControl(CE_ScrollBarLast, &newScrollbar, painter, widget);
-                    //                    }
-                }
+                QPainterPath path;
+                path.addRoundedRect(scrollbar->rect, 4, 4);
+                painter->setClipPath(path);
+                painter->drawRect(scrollbar->rect);
+
                 if (scrollbar->subControls & SC_ScrollBarSlider)
                 {
-                    newScrollbar.rect = scrollbar->rect;
-                    newScrollbar.state = saveFlags;
-                    newScrollbar.rect = proxy()->subControlRect(control, &newScrollbar, SC_ScrollBarSlider, widget);
-                    if (newScrollbar.rect.isValid())
+                    QRect sliderRect = proxy()->subControlRect(CC_ScrollBar, scrollbar, SC_ScrollBarSlider, widget);
+                    if (sliderRect.isValid())
                     {
-                        if (!(scrollbar->activeSubControls & SC_ScrollBarSlider))
-                            newScrollbar.state &= ~(State_Sunken | State_MouseOver);
-                        //                        proxy()->drawControl(CE_ScrollBarSlider, &newScrollbar, painter, widget);
-                        painter->setBrush(Qt::green);
-                        painter->drawRoundedRect(newScrollbar.rect, 8, 8);
-
-                        //                        if (scrollbar->state & State_HasFocus)
-                        //                        {
-                        //                            QStyleOptionFocusRect fropt;
-                        //                            fropt.QStyleOption::operator=(newScrollbar);
-                        //                            fropt.rect.setRect(newScrollbar.rect.x() + 2, newScrollbar.rect.y() + 2,
-                        //                                               newScrollbar.rect.width() - 5,
-                        //                                               newScrollbar.rect.height() - 5);
-                        //                            proxy()->drawPrimitive(PE_FrameFocusRect, &fropt, painter, widget);
-                        //                        }
+                        QColor sliderColor = QColor(193, 193, 193);
+                        if ((scrollbar->activeSubControls & SC_ScrollBarSlider))
+                        {
+                            if (scrollbar->state & State_MouseOver)
+                            {
+                                sliderColor = sliderColor.darker(120);
+                            }
+                            if (scrollbar->state & State_Sunken)
+                            {
+                                sliderColor = sliderColor.darker(140);
+                            }
+                        }
+                        painter->setOpacity(opacity);
+                        painter->setBrush(sliderColor);
+                        painter->drawRoundedRect(sliderRect, 4, 4);
                     }
                 }
             }
             break;
         default:
-            QProxyStyle::drawComplexControl(control, option, painter, widget);
             break;
     }
 }
@@ -309,23 +269,6 @@ QSize UProxyStyle::sizeFromContents(QStyle::ContentsType type,
     QSize originSize = QProxyStyle::sizeFromContents(type, option, contentsSize,
                        widget);
     return originSize;
-}
-
-void UProxyStyle::drawScroller(const QStyleOption* option,
-                               QPainter* painter) const
-{
-    Q_UNUSED(option)
-    Q_UNUSED(painter)
-    //    QRect rect = option->rect;
-    //    // Draw background
-    //    painter->drawPixmap(rect, QPixmap(kItemNormalBackground));
-    //    // Draw arrow
-    //    QPixmap arrow_pixmap = getArrowPixmap(option->state);
-    //    QRect arrow_rect(rect.x() + (rect.width() - arrow_pixmap.width()) / 2,
-    //                     rect.y() + (rect.height() - arrow_pixmap.height()) / 2,
-    //                     arrow_pixmap.width(),
-    //                     arrow_pixmap.height());
-    //    painter->drawPixmap(arrow_rect, arrow_pixmap);
 }
 
 void UProxyStyle::drawMenuItem(const QStyleOptionMenuItem* menuItem,

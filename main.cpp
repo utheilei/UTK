@@ -16,10 +16,15 @@ int main(int argc, char* argv[])
     app.setWindowIcon(QIcon(":/images/utkwidget.svg"));
     app.setApplicationName(QObject::tr("UTK"));
     app.setApplicationVersion("1.0");
+    QFont font = app.font();
+    font.setPixelSize(12);
+    font.setWeight(QFont::Normal);
+    font.setFamily("Microsoft YaHei");
+    app.loadFont(font);
 
-    QString name = app.applicationDirPath() + QString("/%1.log").arg(app.applicationName());
-    app.initApplicationLog(name);
-    app.setLogLevel(simplelog::Logger::LogLevel::Info);
+    //    QString name = app.applicationDirPath() + QString("/%1.log").arg(app.applicationName());
+    //    app.initApplicationLog(name);
+    //    app.setLogLevel(simplelog::Logger::LogLevel::Info);
 
     qInfo() << "========== Application is start ==========" << Qt::endl;
 

@@ -7,6 +7,8 @@
 #include "widgets/hlstylebutton.h"
 #include "uaboutdialog.h"
 #include "uapplication.h"
+#include "style/uproxystyle.h"
+#include "widgets/uscrollbar.h"
 
 #include "uwidgetutils.h"
 #include "titleswidget.h"
@@ -19,6 +21,8 @@
 #include <QStandardItemModel>
 #include <QStackedWidget>
 #include <QDebug>
+#include <QScrollArea>
+#include <QLabel>
 
 MainWindow::MainWindow(QWidget* parent)
     : UMainWindow(parent)
@@ -126,10 +130,22 @@ void MainWindow::initListView()
         model->appendRow(item);
     }
 }
-
+#include <private/qabstractscrollarea_p.h>
 void MainWindow::initContent()
 {
     UWidget* labelWidget = new UWidget(this);
+    auto a = new UScrollBar(Qt::Horizontal, labelWidget);
+    a->setGeometry(600, 600, 200, 10);
+    QScrollArea* area = new QScrollArea(labelWidget);
+    auto b = new UScrollBar(area);
+    area->setHorizontalScrollBar(b);
+    auto c = new UScrollBar(area);
+    area->setVerticalScrollBar(c);
+    area->setGeometry(100, 100, 400, 400);
+    QLabel* label = new QLabel("this is label", area);
+    label->setFixedSize(600, 600);
+    area->setWidgetResizable(true);
+    area->setWidget(label);
     labelWidget->setBackgroundColor(Qt::red);
     m_mainWidget->addWidget(labelWidget);
     m_listWidget.insert(0, labelWidget);

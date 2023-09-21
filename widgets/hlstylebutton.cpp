@@ -8,7 +8,7 @@
 constexpr int margins = 10;
 constexpr int radius = 8;
 
-HLStyleButton::HLStyleButton(const QString text, QWidget *parent)
+HLStyleButton::HLStyleButton(const QString text, QWidget* parent)
     : QPushButton(text, parent)
 {
     QFont f = font();
@@ -18,7 +18,7 @@ HLStyleButton::HLStyleButton(const QString text, QWidget *parent)
     setContentsMargins(margins, margins, contentsMargins().top(), contentsMargins().bottom());
 }
 
-void HLStyleButton::paintEvent(QPaintEvent *event)
+void HLStyleButton::paintEvent(QPaintEvent* event)
 {
     Q_UNUSED(event)
 
@@ -31,7 +31,8 @@ void HLStyleButton::paintEvent(QPaintEvent *event)
     QColor brush = palette().color(QPalette::Button);
     stylePainter.setBrush(brush.dark(150));
     stylePainter.setPen(Qt::NoPen);
-    if (btn.state & QStyle::State_Enabled) {
+    if (btn.state & QStyle::State_Enabled)
+    {
         if (btn.state & QStyle::State_MouseOver)
             stylePainter.setBrush(brush.dark(200));
     }
@@ -43,6 +44,6 @@ void HLStyleButton::paintEvent(QPaintEvent *event)
     painterPath.addRoundedRect(rect, radius, radius);
     stylePainter.drawPath(painterPath);
 
-//    stylePainter.drawControl(QStyle::CE_PushButtonBevel, btn);
+    //    stylePainter.drawControl(QStyle::CE_PushButtonBevel, btn);
     stylePainter.drawControl(QStyle::CE_PushButtonLabel, btn);
 }
