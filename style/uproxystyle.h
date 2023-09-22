@@ -33,8 +33,7 @@ public:
 
     enum UComplexControl
     {
-        CC_USlider = QStyle::CC_CustomBase + 100,
-        CC_UScrollBar
+        CC_UScrollBar = QStyle::CC_CustomBase + 100
     };
     Q_ENUM(UComplexControl)
 
@@ -68,8 +67,6 @@ public:
     void drawComplexControl(UComplexControl control, const QStyleOptionComplex* option,
                             QPainter* painter, const QWidget* widget = nullptr) const;
 
-    QSize sizeFromContents(ContentsType type, const QStyleOption* option,
-                           const QSize &contentsSize, const QWidget* widget = nullptr) const override;
 private:
     void drawMenuItem(const QStyleOptionMenuItem* menuItem,
                       QPainter* painter) const;
@@ -81,9 +78,6 @@ private:
                           QPainter* painter) const;
 
     void drawSubMenuItem(const QStyleOptionMenuItem* menuItem, QPainter* painter) const;
-
-    void drawMenuItemCheckedIcon(const QStyleOptionMenuItem* menuItem,
-                                 QPainter* painter) const;
 
     QPixmap getSubMenuPixmap(const QStyle::State state) const;
 

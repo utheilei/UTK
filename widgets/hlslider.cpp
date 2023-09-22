@@ -1,5 +1,5 @@
 #include "hlslider.h"
-#include "popupmenustyle.h"
+#include "style/uproxystyle.h"
 
 #include <QStyleOptionSlider>
 #include <QDebug>
@@ -7,7 +7,21 @@
 
 HLSlider::HLSlider(QWidget* parent) : QSlider(parent)
 {
-    setStyle(new PopupMenuStyle);
+    if (nullptr == qobject_cast<UProxyStyle*>(this->style()))
+    {
+        m_style.reset(new UProxyStyle());
+        setStyle(m_style.get());
+    }
+    setRange(0, 100);
+}
+
+HLSlider::HLSlider(Qt::Orientation orientation, QWidget* parent) : QSlider(orientation, parent)
+{
+    if (nullptr == qobject_cast<UProxyStyle*>(this->style()))
+    {
+        m_style.reset(new UProxyStyle());
+        setStyle(m_style.get());
+    }
     setRange(0, 100);
 }
 

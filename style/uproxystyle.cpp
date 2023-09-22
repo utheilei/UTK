@@ -1,6 +1,7 @@
 #include "uproxystyle.h"
 #include "upalette.h"
 
+#include <qdrawutil.h>
 #include <QDebug>
 #include <QPixmap>
 #include <QPixmapCache>
@@ -12,10 +13,10 @@
 namespace
 {
     const QString SUB_MENU_ICON = ":/images/sub_menu.svg";
-    const int FRAME_BORDER_RADIUS = 8;
+    const int FRAME_BORDER_RADIUS = 2;
     const int ICON_PIXEL_SIZE = 16;
     const int ICON_LEFT_MARGIN = 8;
-    const int MARGINS = 4;
+    const int MARGINS = 0;
     const int LEFT_MARGIN = ICON_PIXEL_SIZE + ICON_LEFT_MARGIN * 2;
 }  // namespace
 
@@ -54,9 +55,9 @@ int UProxyStyle::pixelMetric(QStyle::PixelMetric metric,
         case QStyle::PM_MenuHMargin:
             return 2;
         case QStyle::PM_MenuVMargin:
-            return 8;
+            return 4;
         case QStyle::PM_MenuPanelWidth:
-            return 0;
+            return 1;
         case QStyle::PM_MenuTearoffHeight:
             return 0;
         case QStyle::PM_MenuDesktopFrameWidth:
@@ -91,10 +92,10 @@ void UProxyStyle::drawControl(QStyle::ControlElement element,
             {
                 painter->save();
 
-                bool hover = menuItem->state & State_Selected && menuItem->state & State_Enabled;
+                bool hover = (menuItem->state & State_Selected) && (menuItem->state & State_Enabled);
                 if (hover)   //鼠标滑过，先画一个矩形，使后面的文字不会被覆盖
                 {
-                    painter->setBrush(menuItem->palette.brush(colorGroup(menuItem->state), QPalette::Button));
+                    painter->setBrush(menuItem->palette.brush(colorGroup(menuItem->state), QPalette::Highlight));
                     painter->drawRect(menuItem->menuRect.adjusted(MARGINS, 0, -MARGINS, 0));
                 }
 
@@ -139,34 +140,21 @@ void UProxyStyle::drawPrimitive(QStyle::PrimitiveElement element,
     {
         case QStyle::PE_FrameMenu: //整个菜单widget的边框色
         {
+            qDrawShadeRect(painter, option->rect, option->palette, option->state & State_Sunken, 1);
             break;
         }
         case QStyle::PE_PanelMenu: //整个菜单widget的背景色
         {
             painter->setRenderHint(QPainter::Antialiasing);
             QPainterPath path;
-            QRect rect = option->rect.adjusted(MARGINS, MARGINS, -MARGINS, -MARGINS);
-            path.addRoundedRect(rect, FRAME_BORDER_RADIUS, FRAME_BORDER_RADIUS);
+            path.addRoundedRect(option->rect, FRAME_BORDER_RADIUS, FRAME_BORDER_RADIUS);
+            painter->setClipPath(path);
             QStyle::State widgetState;
             if (widget && widget->isActiveWindow())
                 widgetState |= QStyle::State_Active;
             if (widget && widget->isEnabled())
                 widgetState |= QStyle::State_Enabled;
-            painter->fillPath(path, option->palette.brush(colorGroup(widgetState), QPalette::Base));
-
-            QColor color(92, 93, 95, 50);
-            int arr[MARGINS] = {10, 20, 30, 40};
-            for (int i = 0; i < MARGINS; i++)
-            {
-                QPainterPath path;
-                path.setFillRule(Qt::WindingFill);
-                QRect rect = option->rect.adjusted(i, i, -i, -i);
-                path.addRoundedRect(rect, FRAME_BORDER_RADIUS, FRAME_BORDER_RADIUS);
-
-                color.setAlpha(arr[i]);
-                painter->setPen(color);
-                painter->drawPath(path);
-            }
+            painter->fillPath(path, option->palette.brush(QPalette::Base));
             break;
         }
         default:
@@ -187,36 +175,37 @@ void UProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyl
         drawComplexControl(static_cast<UComplexControl>(control), option, painter, widget);
         return;
     }
+    switch (control)
+    {
+        case CC_Slider:
+            if (const QStyleOptionSlider* styleOptionSlider = qstyleoption_cast<const QStyleOptionSlider*>(option))
+            {
+                QRect grooveRect = subControlRect(CC_Slider, styleOptionSlider, SC_SliderGroove, widget);
+                grooveRect = QRect(grooveRect.x(), grooveRect.y() + grooveRect.height() / 2 - 5, grooveRect.width(), 10);
+                painter->setPen(Qt::NoPen);
+                painter->setBrush(styleOptionSlider->palette.brush(QPalette::Button));
 
+                painter->setRenderHint(QPainter::Antialiasing, true);
+                painter->drawRoundedRect(grooveRect, 4, 4);
 
-    QProxyStyle::drawComplexControl(control, option, painter, widget);
+                QRect handleRect = subControlRect(CC_Slider, styleOptionSlider, SC_SliderHandle, widget);
+                int width = qMin(handleRect.width(), handleRect.height());
+                handleRect = QRect(handleRect.x(), handleRect.y() + (handleRect.height() - width) / 2, width, width);
+                painter->setPen(Qt::gray);
+                painter->setBrush(Qt::white);
+                painter->drawEllipse(handleRect);
+            }
+            break;
+        default:
+            QProxyStyle::drawComplexControl(control, option, painter, widget);
+            break;
+    }
 }
 
 void UProxyStyle::drawComplexControl(UComplexControl control, const QStyleOptionComplex* option, QPainter* painter, const QWidget* widget) const
 {
     switch (control)
     {
-        case CC_USlider:
-            if (const QStyleOptionSlider* styleOptionSlider = qstyleoption_cast<const QStyleOptionSlider*>(option))
-            {
-                QRect grooveRect = subControlRect(CC_Slider, styleOptionSlider, SC_SliderGroove, widget);
-                grooveRect = QRect(grooveRect.x(), grooveRect.y() + grooveRect.height() / 2 - 5, grooveRect.width(), 10);
-                QLinearGradient gradient(0, 0, grooveRect.width(), grooveRect.height());//y轴使用渐变
-                gradient.setColorAt(0.0, QColor("#0fd850"));
-                gradient.setColorAt(1.0, QColor("#f9f047"));
-                painter->setPen(Qt::transparent);
-                painter->setBrush(gradient);
-
-                painter->setRenderHint(QPainter::Antialiasing, true);
-                painter->drawRoundedRect(grooveRect, 8, 8);
-
-                QRect handleRect = subControlRect(CC_Slider, styleOptionSlider, SC_SliderHandle, widget);
-                int width = qMin(handleRect.width(), handleRect.height());
-                handleRect = QRect(handleRect.x(), handleRect.y() + (handleRect.height() - width) / 2, width, width);
-                painter->setBrush(Qt::blue);
-                painter->drawEllipse(handleRect);
-            }
-            break;
         case CC_UScrollBar:
             if (const QStyleOptionSlider* scrollbar = qstyleoption_cast<const QStyleOptionSlider*>(option))
             {
@@ -261,16 +250,6 @@ void UProxyStyle::drawComplexControl(UComplexControl control, const QStyleOption
     }
 }
 
-QSize UProxyStyle::sizeFromContents(QStyle::ContentsType type,
-                                    const QStyleOption* option,
-                                    const QSize &contentsSize,
-                                    const QWidget* widget) const
-{
-    QSize originSize = QProxyStyle::sizeFromContents(type, option, contentsSize,
-                       widget);
-    return originSize;
-}
-
 void UProxyStyle::drawMenuItem(const QStyleOptionMenuItem* menuItem,
                                QPainter* painter) const
 {
@@ -302,7 +281,7 @@ void UProxyStyle::drawMenuItem(const QStyleOptionMenuItem* menuItem,
         int dim = (h - 2 * 2) / 2;
         int xpos = x + w - 2 - 1 - dim;
         QRect vSubMenuRect = visualRect(menuItem->direction, menuItem->rect, QRect(xpos, y + h / 2 - dim / 2, dim, dim));
-        int fw = menuItem->fontMetrics.width(shortcutText);
+        int fw = menuItem->fontMetrics.horizontalAdvance(shortcutText);
         textRect.moveLeft(menuItem->rect.right() - fw - vSubMenuRect.width());
         textRect = visualRect(menuItem->direction, menuItem->rect, textRect);
         painter->drawText(textRect, text_flags, shortcutText);
@@ -353,22 +332,6 @@ void UProxyStyle::drawSubMenuItem(const QStyleOptionMenuItem* menuItem,
     QRect vSubMenuRect = visualRect(menuItem->direction, menuItem->rect, QRect(xpos, y + h / 2 - dim / 2, dim, dim));
     QPixmap pixmap(getSubMenuPixmap(menuItem->state));
     painter->drawPixmap(vSubMenuRect, pixmap);
-}
-
-void UProxyStyle::drawMenuItemCheckedIcon(const QStyleOptionMenuItem* menuItem,
-        QPainter* painter) const
-{
-    Q_UNUSED(menuItem)
-    Q_UNUSED(painter)
-    //    if (menuItem->checked) {
-    //        QPixmap pixmap;
-    //        QPixmapCache::find(kCheckedIconCacheKey, &pixmap);
-
-    //        int height = menuItem->rect.height();
-    //        int x = menuItem->rect.width() - TEXT_LEFT_MARGIN - ICON_PIXEL_SIZE;
-    //        int y = menuItem->rect.y() + (height - pixmap.height()) / 2;
-    //        painter->drawPixmap(x, y, pixmap.width(), pixmap.height(), pixmap);
-    //    }
 }
 
 QPixmap UProxyStyle::getSubMenuPixmap(const QStyle::State state) const

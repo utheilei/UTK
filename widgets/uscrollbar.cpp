@@ -9,13 +9,21 @@
 
 UScrollBar::UScrollBar(QWidget* parent) : QScrollBar(parent)
 {
-    setStyle(new UProxyStyle);
+    if (nullptr == qobject_cast<UProxyStyle*>(this->style()))
+    {
+        m_style.reset(new UProxyStyle());
+        setStyle(m_style.get());
+    }
     initAnimation();
 }
 
 UScrollBar::UScrollBar(Qt::Orientation orientation, QWidget* parent) : QScrollBar(orientation, parent)
 {
-    setStyle(new UProxyStyle);
+    if (nullptr == qobject_cast<UProxyStyle*>(this->style()))
+    {
+        m_style.reset(new UProxyStyle());
+        setStyle(m_style.get());
+    }
     initAnimation();
 }
 

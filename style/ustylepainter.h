@@ -25,7 +25,7 @@ public:
     }
     inline bool begin(QPaintDevice* pd, QWidget* w)
     {
-        Q_ASSERT_X(w, "QStylePainter::QStylePainter", "Widget must be non-zero");
+        Q_ASSERT_X(w, "UStylePainter::UStylePainter", "Widget must be non-zero");
         widget = w;
         wstyle = w->style();
         uStyle = qobject_cast<UProxyStyle*>(wstyle);

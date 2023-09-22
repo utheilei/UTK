@@ -1,16 +1,19 @@
 #include "hlmenu.h"
-#include "popupmenustyle.h"
+#include "style/uproxystyle.h"
 
 #include <QHelpEvent>
 #include <QToolTip>
 
 HLMenu::HLMenu(QWidget* parent) : QMenu(parent)
-    , popupMenuStyle(new PopupMenuStyle())
 {
     setMinimumWidth(160);
     setWindowFlag(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
-    setStyle(popupMenuStyle.get());
+    if (nullptr == qobject_cast<UProxyStyle*>(this->style()))
+    {
+        m_style.reset(new UProxyStyle());
+        setStyle(m_style.get());
+    }
 }
 
 bool HLMenu::event(QEvent* event)

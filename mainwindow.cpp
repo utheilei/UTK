@@ -1,13 +1,11 @@
 #include "mainwindow.h"
 #include "hltooltip.h"
-#include "stylebutton.h"
-#include "messagebox.h"
 #include "widgets/hllistview.h"
 #include "widgets/hlmenu.h"
+#include "widgets/hlslider.h"
 #include "widgets/hlstylebutton.h"
 #include "uaboutdialog.h"
 #include "uapplication.h"
-#include "style/uproxystyle.h"
 #include "widgets/uscrollbar.h"
 
 #include "uwidgetutils.h"
@@ -130,12 +128,12 @@ void MainWindow::initListView()
         model->appendRow(item);
     }
 }
-#include <private/qabstractscrollarea_p.h>
+
 void MainWindow::initContent()
 {
     UWidget* labelWidget = new UWidget(this);
-    auto a = new UScrollBar(Qt::Horizontal, labelWidget);
-    a->setGeometry(600, 600, 200, 10);
+    auto slider = new HLSlider(Qt::Horizontal, labelWidget);
+    slider->setGeometry(600, 400, 200, 40);
     QScrollArea* area = new QScrollArea(labelWidget);
     auto b = new UScrollBar(area);
     area->setHorizontalScrollBar(b);
@@ -176,16 +174,6 @@ void MainWindow::initConnection()
 
 void MainWindow::handleAbout()
 {
-    //    MessageBox customMsgBox;
-    //    customMsgBox.setWindowTitle(tr("关于本软件"));
-    //    StyleButton* styleButton = new StyleButton(tr("好的"), this);
-    //    styleButton->setRadius(8);
-    //    customMsgBox.addButton(styleButton, QMessageBox::ActionRole);
-    //    customMsgBox.setIconPixmap(QPixmap(":/images/about.png").scaled(80, 80, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-    //    customMsgBox.setText(tr("欢迎使用Qt-Demo软件"));
-    //    customMsgBox.setTextFont(QFont("SimHei", 10));
-    //    customMsgBox.setTextWordWrap(true);
-    //    customMsgBox.exec();
     UAboutDialog dialog(this);
     dialog.setAppIcon(uApp->windowIcon());
     dialog.setAppVersion(QString("Version: %1").arg(uApp->applicationVersion()));

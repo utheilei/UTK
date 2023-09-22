@@ -3,7 +3,7 @@
 
 #include <QMenu>
 
-class PopupMenuStyle;
+class UProxyStyle;
 class HLMenu : public QMenu
 {
     Q_OBJECT
@@ -15,7 +15,7 @@ protected:
     bool event(QEvent* event) override;
 
 private:
-    QScopedPointer<PopupMenuStyle> popupMenuStyle;
+    QScopedPointer<UProxyStyle> m_style;
 };
 
 #endif // HLMENU_H

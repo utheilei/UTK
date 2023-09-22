@@ -4,6 +4,7 @@
 #include <QScrollBar>
 #include <QPropertyAnimation>
 
+class UProxyStyle;
 class UScrollBar : public QScrollBar
 {
     Q_OBJECT
@@ -29,6 +30,7 @@ private:
     void handleAnimation(qreal startValue, qreal endValue);
     QPropertyAnimation m_propertyAnimation;
     qreal m_opacity = 0.0;
+    QScopedPointer<UProxyStyle> m_style;
 };
 
 #endif // USCROLLBAR_H
