@@ -1,4 +1,6 @@
 #include "uwidget.h"
+#include "uapplication.h"
+#include "style/upalette.h"
 
 #include <QPainter>
 #include <QPainterPath>
@@ -58,21 +60,24 @@ void UWidget::paintEvent(QPaintEvent* event)
         rectPath.addRoundedRect(rect, m_radius, m_radius);
     else
         rectPath.addRect(rect);
-    painter.fillPath(rectPath, palette().color(QPalette::Background));
+    painter.setPen(QPen(palette().color(QPalette::Background), 1));
+    painter.setBrush(palette().color(QPalette::Background));
+    painter.drawPath(rectPath);
 
     if (m_isOpen)
     {
-        QColor color(92, 93, 95, 50);
-        int arr[10] = {150, 120, 80, 50, 40, 30, 20, 10, 5, 5};
-        for (int i = 0; i < 10; i++)
+        QColor color = uApp->appPalette()->color(QPalette::Shadow);
+        int arr[8] = {150, 120, 80, 50, 40, 30, 20, 10};
+        for (int i = 0; i < m_margins; i++)
         {
             QPainterPath path;
             path.setFillRule(Qt::WindingFill);
             path.addRoundedRect(rect.topLeft().x() - i - 1, rect.topLeft().y() - i - 1,
-                                ((i + 1) * 2 + rect.width()), ((i + 1) * 2 + rect.height()), 15, 15);
+                                ((i + 1) * 2 + rect.width()), ((i + 1) * 2 + rect.height()), m_radius, m_radius);
 
             color.setAlpha(arr[i]);
             painter.setPen(color);
+            painter.setBrush(Qt::NoBrush);
             painter.drawPath(path);
         }
     }

@@ -1,6 +1,7 @@
 ﻿#include "uapplication.h"
 #include "logger/simplelog.h"
 #include "uaboutdialog.h"
+#include "style/uproxystyle.h"
 
 #include <QTextCodec>
 #include <QTranslator>
@@ -52,6 +53,12 @@ UApplication::UApplication(const QString &appId, int &argc, char** argv)
 
 UApplication::~UApplication()
 {
+}
+
+void UApplication::setAppStyle(QStyle *style)
+{
+    setStyle(style);
+    setPalette(style->standardPalette());
 }
 
 void UApplication::initApplicationLog(const QString &fileName)
@@ -115,7 +122,8 @@ void UApplication::changeTranslator(const QLocale::Language &language)
 
 UPalette* UApplication::appPalette()
 {
-    return nullptr;
+    auto ustyle = qobject_cast<UProxyStyle*>(style());
+    return ustyle ? ustyle->palette() : nullptr;
 }
 
 void UApplication::setAboutDialog(UAboutDialog* dialog)

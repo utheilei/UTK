@@ -1,5 +1,7 @@
 #include "udialog.h"
 #include "titlebar.h"
+#include "uapplication.h"
+#include "style/upalette.h"
 
 #include <QPainter>
 #include <QPainterPath>
@@ -49,9 +51,11 @@ void UDialog::paintEvent(QPaintEvent* event)
     QRect contentRect(rect().topLeft().x() + margin, rect().topLeft().y() + margin,
                       (rect().width() - 2 * margin), (rect().height() - 2 * margin));
     rectPath.addRoundedRect(contentRect, 15, 15);
-    painter.fillPath(rectPath, palette().color(QPalette::Base));
+    painter.setPen(QPen(palette().color(QPalette::Base), 1));
+    painter.setBrush(palette().color(QPalette::Base));
+    painter.drawPath(rectPath);
 
-    QColor color(92, 93, 95, 50);
+    QColor color = uApp->appPalette()->color(QPalette::Shadow);
     int arr[8] = {10, 20, 30, 40, 50, 80, 120, 150};
     for (int i = 0; i < margin; i++)
     {
@@ -62,6 +66,7 @@ void UDialog::paintEvent(QPaintEvent* event)
 
         color.setAlpha(arr[i]);
         painter.setPen(color);
+        painter.setBrush(Qt::NoBrush);
         painter.drawPath(path);
     }
 

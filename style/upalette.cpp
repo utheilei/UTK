@@ -42,23 +42,16 @@ void UPalette::initPaletteData()
 {
     Q_D(UPalette);
     d->data = QSharedDataPointer<DPaletteData>(new DPaletteData());
-    setBrush(HighlightBackground, QColor("#2F54EB"));
-    setBrush(HighlightHoverBackground, QColor("#1890FF"));
-    setBrush(HighlightPressBackground, QColor("#1D39C4"));
-    setBrush(ItemBackground, QColor("#212225"));
-    setBrush(AlternatingRow, QColor("#161719"));
-    setBrush(LabelText, QColor(255, 255, 255, 0.86 * 255));
-    setBrush(HighlightTextForeground, QColor("#2F54EB"));
-    setBrush(NormalBackground, QColor("#19DA2F"));
-    setBrush(WarningBackground, QColor("#D89614"));
-    setBrush(ErrorBackground, QColor("#DF3535"));
-    setBrush(OrangeBackground, QColor("#C45E00"));
-    setBrush(OfflineBackground, QColor("#2F54EB"));
-    setBrush(MixedBackground, QColor("#FCBF22"));
-    setBrush(InformationBackground, QColor("#177DDC"));
-    setBrush(MenuBackground, QColor("#0F0F12"));
-    setBrush(ModuleBackground, QColor("#17171A"));
-    setBrush(SplitLineBackground, QColor("#50505C"));
+    setBrush(UPalette::ItemBackground, QColor(0, 0, 0, 0.03 * 255));
+    setBrush(UPalette::NormalBackground, QColor("#19DA2F"));
+    setBrush(UPalette::WarningBackground, QColor("#D89614"));
+    setBrush(UPalette::ErrorBackground, QColor("#FF5736"));
+    setBrush(UPalette::OrangeBackground, QColor("#C45E00"));
+    setBrush(UPalette::OfflineBackground, QColor("#2F54EB"));
+    setBrush(UPalette::InformationBackground, QColor("#177DDC"));
+    setBrush(UPalette::MenuBackground, QColor("#FFFFFF"));
+    setBrush(UPalette::ModuleBackground, QColor("#17171A"));
+    setBrush(UPalette::SplitLineBackground, QColor("#50505C"));
 }
 
 UPalette &UPalette::operator=(const UPalette &palette)
@@ -166,19 +159,13 @@ QDebug operator<<(QDebug dbg, const UPalette &p)
     const char* colorTypeNames[] =
     {
         "NoType",
-        "HighlightBackground",
-        "HighlightHoverBackground",
-        "HighlightPressBackground",
         "ItemBackground",
         "AlternatingRow",
-        "LabelText",
-        "HighlightTextForeground",
         "NormalBackground",
         "WarningBackground",
         "ErrorBackground",
         "OrangeBackground",
         "OfflineBackground",
-        "MixedBackground",
         "InformationBackground",
         "MenuBackground",
         "ModuleBackground",

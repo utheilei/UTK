@@ -19,6 +19,8 @@ public:
     UApplication(const QString &appId, int &argc, char** argv);
     ~UApplication() override;
 
+    void setAppStyle(QStyle *style);
+
     void initApplicationLog(const QString &fileName);
 
     void setLogLevel(simplelog::Logger::LogLevel level);

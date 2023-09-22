@@ -25,7 +25,7 @@ UMainWindow::UMainWindow(QWidget* parent) : UWidget(parent)
     setAttribute(Qt::WA_TranslucentBackground);
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     setMouseTracking(true);
-    setMargins(10);
+    setMargins(8);
     addDropShadowEffect(true);
 
     m_titleBar = new TitleBar(this);
@@ -33,7 +33,7 @@ UMainWindow::UMainWindow(QWidget* parent) : UWidget(parent)
     m_layout = new QVBoxLayout;
     m_layout->setContentsMargins(0, 0, 0, 0);
     m_mainLayout = new QVBoxLayout;
-    m_mainLayout->setContentsMargins(10, 10, 10, 10);
+    m_mainLayout->setContentsMargins(8, 8, 8, 8);
     m_mainLayout->addWidget(m_titleBar);
     m_mainLayout->addLayout(m_layout);
     m_mainLayout->setSpacing(0);
@@ -94,11 +94,11 @@ void UMainWindow::onWindowStateChange()
     }
     else
     {
-        setMargins(10);
+        setMargins(8);
         setRadius(15);
         addDropShadowEffect(true);
         m_titleBar->setRadius(15);
-        m_mainLayout->setContentsMargins(10, 10, 10, 10);
+        m_mainLayout->setContentsMargins(8, 8, 8, 8);
         if (closeButton)
             closeButton->setRadius(15);
     }

@@ -24,11 +24,13 @@ int main(int argc, char* argv[])
     font.setFamily("Microsoft YaHei");
     app.loadFont(font);
 
-    app.setStyle(new UProxyStyle());
+    auto style = new UProxyStyle();
+    style->setTheme(UTheme::DarkTheme);
+    app.setAppStyle(style);
 
-    QString name = app.applicationDirPath() + QString("/%1.log").arg(app.applicationName());
-    app.initApplicationLog(name);
-    app.setLogLevel(simplelog::Logger::LogLevel::Info);
+//    QString name = app.applicationDirPath() + QString("/%1.log").arg(app.applicationName());
+//    app.initApplicationLog(name);
+//    app.setLogLevel(simplelog::Logger::LogLevel::Info);
 
     qInfo() << "========== Application is start ==========" << Qt::endl;
 

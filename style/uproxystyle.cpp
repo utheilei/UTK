@@ -29,9 +29,28 @@ UProxyStyle::~UProxyStyle()
 {
 }
 
+UTheme::ThemeType UProxyStyle::theme() const
+{
+    return m_theme.theme();
+}
+
+void UProxyStyle::setTheme(const UTheme::ThemeType &type)
+{
+    if (m_theme.theme() != type)
+    {
+        m_theme.setTheme(type);
+        emit themeChanged(type);
+    }
+}
+
 QPalette UProxyStyle::standardPalette() const
 {
-    return UPalette();
+    return *m_theme.palette();
+}
+
+UPalette *UProxyStyle::palette() const
+{
+    return m_theme.palette();
 }
 
 int UProxyStyle::styleHint(QStyle::StyleHint hint,

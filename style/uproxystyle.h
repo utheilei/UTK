@@ -1,6 +1,8 @@
 #ifndef UPROXYSTYLE_H
 #define UPROXYSTYLE_H
 
+#include "utheme.h"
+
 #include <QProxyStyle>
 
 class QStyleOptionMenuItem;
@@ -41,7 +43,12 @@ public:
     UProxyStyle();
     ~UProxyStyle() override;
 
+    UTheme::ThemeType theme() const;
+    void setTheme(const UTheme::ThemeType &type);
+
     QPalette standardPalette() const override;
+
+    UPalette* palette() const;
 
     int styleHint(StyleHint hint, const QStyleOption* option = nullptr,
                   const QWidget* widget = nullptr, QStyleHintReturn* returnData = nullptr) const override;
@@ -66,6 +73,8 @@ public:
 
     void drawComplexControl(UComplexControl control, const QStyleOptionComplex* option,
                             QPainter* painter, const QWidget* widget = nullptr) const;
+signals:
+    void themeChanged(const UTheme::ThemeType &type);
 
 private:
     void drawMenuItem(const QStyleOptionMenuItem* menuItem,
@@ -84,6 +93,8 @@ private:
     QPixmap getIconPixmap(const QStyle::State state, const QIcon &icon, const QSize &size) const;
 
     QPalette::ColorGroup colorGroup(const QStyle::State state) const;
+
+    UTheme m_theme;
 };
 
 #endif // UPROXYSTYLE_H
