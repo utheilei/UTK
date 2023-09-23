@@ -14,23 +14,25 @@ int main(int argc, char* argv[])
         return !app.sendMessage("Application is Running");
     }
 
-    app.setWindowIcon(QIcon(":/images/utkwidget.svg"));
-    app.setApplicationName(QObject::tr("UTK"));
-    app.setApplicationVersion("1.0");
-
     QFont font = app.font();
     font.setPixelSize(12);
     font.setWeight(QFont::Normal);
     font.setFamily("Microsoft YaHei");
     app.loadFont(font);
 
+    QString searchPath = QLatin1String(":/icons");
+    QIcon::setThemeSearchPaths(QStringList() << searchPath);
     auto style = new UProxyStyle();
     style->setTheme(UTheme::DarkTheme);
     app.setAppStyle(style);
 
-//    QString name = app.applicationDirPath() + QString("/%1.log").arg(app.applicationName());
-//    app.initApplicationLog(name);
-//    app.setLogLevel(simplelog::Logger::LogLevel::Info);
+    app.setWindowIcon(QIcon::fromTheme("utkwidget"));
+    app.setApplicationName(QObject::tr("UTK"));
+    app.setApplicationVersion("1.0");
+
+    QString name = app.applicationDirPath() + QString("/%1.log").arg(app.applicationName());
+    app.initApplicationLog(name);
+    app.setLogLevel(simplelog::Logger::LogLevel::Info);
 
     qInfo() << "========== Application is start ==========" << Qt::endl;
 

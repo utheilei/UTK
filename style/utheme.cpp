@@ -8,12 +8,15 @@ public:
     UThemePrivate(UTheme* parent)
         : q_ptr(parent), palette(new UPalette())
     {
+        themeMap.insert(UTheme::ThemeType::LightTheme, "light");
+        themeMap.insert(UTheme::ThemeType::DarkTheme, "dark");
     }
 
     UTheme* q_ptr = nullptr;
 private:
     QScopedPointer<UPalette> palette;
     UTheme::ThemeType type = UTheme::ThemeType::LightTheme;
+    QMap<UTheme::ThemeType, QString> themeMap;
 };
 
 UTheme::UTheme() : d_ptr(new UThemePrivate(this))
@@ -118,5 +121,12 @@ UPalette *UTheme::palette() const
     Q_D(const UTheme);
 
     return d->palette.get();
+}
+
+QString UTheme::themeName() const
+{
+    Q_D(const UTheme);
+
+    return d->themeMap[theme()];
 }
 

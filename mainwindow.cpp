@@ -7,6 +7,7 @@
 #include "uaboutdialog.h"
 #include "uapplication.h"
 #include "widgets/uscrollbar.h"
+#include "style/uproxystyle.h"
 
 #include "uwidgetutils.h"
 #include "titleswidget.h"
@@ -68,19 +69,33 @@ void MainWindow::initMenu()
 {
     HLMenu* menu = new HLMenu(this);
     QAction* about = menu->addAction(tr("About"));
-    about->setToolTip("ddd");
-    about->setIcon(QIcon(":/images/about.png"));
+    about->setIcon(QIcon::fromTheme("about"));
     menu->addSeparator();
-    QAction* exit = menu->addAction(tr("Exit"));
     HLMenu* menu1 = new HLMenu(this);
-    menu1->setTitle("sub");
-    menu1->addAction("test");
-    menu->addMenu(menu1);
-
+    menu1->setTitle("theme");
+    QAction *dark = menu1->addAction("dark");
+    QAction *light = menu1->addAction("light");
+    auto menuAction = menu->addMenu(menu1);
+    menuAction->setCheckable(true);
+    QAction* exit = menu->addAction(tr("Exit"));
     addMenu(menu);
 
     connect(about, &QAction::triggered, this, &MainWindow::handleAbout);
     connect(exit, &QAction::triggered, this, &MainWindow::handleQuit);
+    connect(dark, &QAction::triggered, this, [=](){
+        if (auto style = qobject_cast<UProxyStyle*>(uApp->style()))
+        {
+            style->setTheme(UTheme::DarkTheme);
+            uApp->setPalette(style->standardPalette());
+        }
+    });
+    connect(light, &QAction::triggered, this, [=](){
+        if (auto style = qobject_cast<UProxyStyle*>(uApp->style()))
+        {
+            style->setTheme(UTheme::LightTheme);
+            uApp->setPalette(style->standardPalette());
+        }
+    });
 }
 
 void MainWindow::showFloatMessage(bool isOK, const QString &message)

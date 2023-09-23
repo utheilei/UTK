@@ -12,7 +12,6 @@
 
 namespace
 {
-    const QString SUB_MENU_ICON = ":/images/sub_menu.svg";
     const int FRAME_BORDER_RADIUS = 2;
     const int ICON_PIXEL_SIZE = 16;
     const int ICON_LEFT_MARGIN = 8;
@@ -39,6 +38,8 @@ void UProxyStyle::setTheme(const UTheme::ThemeType &type)
     if (m_theme.theme() != type)
     {
         m_theme.setTheme(type);
+        QString themeName(m_theme.themeName());
+        QIcon::setThemeName(themeName);
         emit themeChanged(type);
     }
 }
@@ -331,8 +332,16 @@ void UProxyStyle::drawMenuItemIcon(const QStyleOptionMenuItem* menuItem,
         return;
     }
 
+    int x = ICON_LEFT_MARGIN + MARGINS;
+    qDebug() << menuItem->checkType << menuItem->checked << menuItem->menuHasCheckableItems << menuItem->menuItemType;
+    if (menuItem->checked) {
+        painter->setPen(QPen(palette()->color(QPalette::Text)));
+        painter->drawLine(x, menuItem->rect.height()/2, x + 5, menuItem->rect.height()/2 + 7);
+        painter->drawLine(x + 5, menuItem->rect.height()/2 + 7, x + 13, menuItem->rect.height()/2 - 3);
+        x += 13;
+    }
     int y = menuItem->rect.y() + (menuItem->rect.height() - pixmap.height()) / 2;
-    painter->drawPixmap(ICON_LEFT_MARGIN + MARGINS, y, pixmap.width(), pixmap.height(), pixmap);
+    painter->drawPixmap(x, y, pixmap.width(), pixmap.height(), pixmap);
 }
 
 void UProxyStyle::drawSubMenuItem(const QStyleOptionMenuItem* menuItem,
@@ -357,11 +366,11 @@ QPixmap UProxyStyle::getSubMenuPixmap(const QStyle::State state) const
 {
     if (state & QStyle::State_Selected)
     {
-        return SUB_MENU_ICON;
+        return QIcon::fromTheme("sub_menu").pixmap(10, 10);
     }
     else
     {
-        return SUB_MENU_ICON;
+        return QIcon::fromTheme("sub_menu").pixmap(10, 10);
     }
 }
 

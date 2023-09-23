@@ -30,28 +30,28 @@ TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
     m_meunBtn = new StyleButton("", this);
     m_meunBtn->setFixedSize(QSize(height(), height()));
     m_meunBtn->setObjectName("menuButton");
-    m_meunBtn->setIcon(QIcon(":/images/menu.svg"));
+    m_meunBtn->setIcon(QIcon::fromTheme("menu"));
     m_meunBtn->setIconSize(m_size);
     m_meunBtn->setFlat(true);
 
     m_minimizeButton = new StyleButton("", this);
     m_minimizeButton->setFixedSize(QSize(height(), height()));
     m_minimizeButton->setObjectName("minimizeButton");
-    m_minimizeButton->setIcon(QIcon(":/images/min.svg"));
+    m_minimizeButton->setIcon(QIcon::fromTheme("min"));
     m_minimizeButton->setIconSize(m_size);
     m_minimizeButton->setFlat(true);
 
     m_maximizeButton = new StyleButton("",this);
     m_maximizeButton->setFixedSize(QSize(height(), height()));
     m_maximizeButton->setObjectName("maximizeButton");
-    m_maximizeButton->setIcon(QIcon(":/images/max.svg"));
+    m_maximizeButton->setIcon(QIcon::fromTheme("max"));
     m_maximizeButton->setIconSize(m_size);
     m_maximizeButton->setFlat(true);
 
     m_closeButton = new StyleButton("", this);
     m_closeButton->setFixedSize(QSize(height(), height()));
     m_closeButton->setObjectName("closeButton");
-    m_closeButton->setIcon(QIcon(":/images/close.svg"));
+    m_closeButton->setIcon(QIcon::fromTheme("close"));
     m_closeButton->setIconSize(m_size);
     m_closeButton->setFlat(true);
     m_closeButton->setRadius(15);
@@ -265,11 +265,11 @@ void TitleBar::updateMaximize()
         if (bMaximize) {
             m_maximizeButton->setToolTip(tr("Restore"));
             m_maximizeButton->setProperty("maximizeProperty", "restore");
-            m_maximizeButton->setIcon(QIcon(":/images/max1.svg"));
+            m_maximizeButton->setIcon(QIcon::fromTheme("max1"));
         } else {
             m_maximizeButton->setProperty("maximizeProperty", "maximize");
             m_maximizeButton->setToolTip(tr("Maximize"));
-            m_maximizeButton->setIcon(QIcon(":/images/max.svg"));
+            m_maximizeButton->setIcon(QIcon::fromTheme("max"));
         }
 
         m_maximizeButton->setStyle(QApplication::style());

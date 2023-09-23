@@ -23,6 +23,8 @@ public:
 
     UPalette *palette() const;
 
+    QString themeName() const;
+
 private:
     QScopedPointer<UThemePrivate> d_ptr;
     Q_DECLARE_PRIVATE(UTheme)
