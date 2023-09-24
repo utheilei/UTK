@@ -51,7 +51,7 @@ void TitlesWidget::initItems()
 
     for (int i = 0; i < textList.size(); i++)
     {
-        addItem(QIcon(":/images/utkwidget.svg"), textList[i]);
+        addItem(QIcon::fromTheme("title"), textList[i]);
     }
 }
 

@@ -209,7 +209,7 @@ void MainWindow::handleAbout()
     dialog.setAppVersion(QString("Version: %1").arg(uApp->applicationVersion()));
     dialog.setAppName(uApp->applicationName());
     dialog.setAppDescribe("this is a utkwidget");
-    dialog.setAppHomePage("https://www.baidu.com");
+    dialog.setAppHomePage(uApp->organizationDomain());
     dialog.exec();
 }
 

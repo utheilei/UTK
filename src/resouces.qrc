@@ -39,8 +39,6 @@
         <file>images/passwordhide.svg</file>
         <file>images/passwordshow.svg</file>
         <file>images/utkwidget.svg</file>
-        <file>icons/light/icons/about.png</file>
-        <file>icons/dark/icons/about.png</file>
         <file>icons/dark/index.theme</file>
         <file>icons/light/index.theme</file>
         <file>icons/dark/icons/close.svg</file>
@@ -57,5 +55,7 @@
         <file>icons/light/icons/utkwidget.svg</file>
         <file>icons/dark/icons/sub_menu.svg</file>
         <file>icons/light/icons/sub_menu.svg</file>
+        <file>icons/light/icons/about.svg</file>
+        <file>icons/dark/icons/about.svg</file>
     </qresource>
 </RCC>
