@@ -41,11 +41,11 @@
 #ifndef QTLOCALPEER_H
 #define QTLOCALPEER_H
 
+#include "qtlockedfile.h"
+
 #include <QLocalServer>
 #include <QLocalSocket>
 #include <QDir>
-
-#include "qtlockedfile.h"
 
 class QtLocalPeer : public QObject
 {

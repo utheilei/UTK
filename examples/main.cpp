@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     font.setFamily("Microsoft YaHei");
     app.loadFont(font);
 
-    app.setApplicationTheme(UTheme::DarkTheme);
+    app.setApplicationTheme(UTheme::LightTheme);
     app.setWindowIcon(QIcon::fromTheme("utkwidget"));
     app.setApplicationName(QObject::tr("UTK"));
     app.setApplicationVersion("1.0");

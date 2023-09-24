@@ -35,13 +35,10 @@ UTheme::ThemeType UProxyStyle::theme() const
 
 void UProxyStyle::setTheme(const UTheme::ThemeType &type)
 {
-    if (m_theme.theme() != type)
-    {
-        m_theme.setTheme(type);
-        QString themeName(m_theme.themeName());
-        QIcon::setThemeName(themeName);
-        emit themeChanged(type);
-    }
+    m_theme.setTheme(type);
+    QString themeName(m_theme.themeName());
+    QIcon::setThemeName(themeName);
+    emit themeChanged(type);
 }
 
 QPalette UProxyStyle::standardPalette() const

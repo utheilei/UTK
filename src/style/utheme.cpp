@@ -36,11 +36,6 @@ UTheme::ThemeType UTheme::theme() const
 void UTheme::setTheme(const ThemeType &type)
 {
     Q_D(UTheme);
-    if (d->type == type)
-    {
-        return;
-    }
-
     qInfo() << "setTheme" << type;
     d->type = type;
     switch (d->type)
