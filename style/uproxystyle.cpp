@@ -49,7 +49,7 @@ QPalette UProxyStyle::standardPalette() const
     return *m_theme.palette();
 }
 
-UPalette *UProxyStyle::palette() const
+UPalette* UProxyStyle::palette() const
 {
     return m_theme.palette();
 }
@@ -111,7 +111,6 @@ void UProxyStyle::drawControl(QStyle::ControlElement element,
             if (const QStyleOptionMenuItem* menuItem = qstyleoption_cast<const QStyleOptionMenuItem*>(option))
             {
                 painter->save();
-
                 bool hover = (menuItem->state & State_Selected) && (menuItem->state & State_Enabled);
                 if (hover)   //鼠标滑过，先画一个矩形，使后面的文字不会被覆盖
                 {
@@ -129,6 +128,16 @@ void UProxyStyle::drawControl(QStyle::ControlElement element,
                 }
                 else     //文字菜单项
                 {
+                    if (menuItem->checked)
+                    {
+                        QRect textRect = menuItem->rect;
+                        textRect.moveLeft(ICON_LEFT_MARGIN);
+                        textRect = visualRect(menuItem->direction, menuItem->rect, textRect);
+                        painter->setRenderHint(QPainter::Antialiasing);
+                        painter->setPen(QPen(palette()->color(QPalette::Text), 2));
+                        painter->drawLine(textRect.x(), textRect.y() + textRect.height() / 2, textRect.x() + 5, textRect.y() + textRect.height() / 2 + 5);
+                        painter->drawLine(textRect.x() + 5, textRect.y() + textRect.height() / 2 + 5, textRect.x() + 13, textRect.y() + textRect.height() / 2 - 4);
+                    }
                     drawMenuItem(menuItem, painter);
                 }
 
@@ -331,15 +340,7 @@ void UProxyStyle::drawMenuItemIcon(const QStyleOptionMenuItem* menuItem,
     {
         return;
     }
-
     int x = ICON_LEFT_MARGIN + MARGINS;
-    qDebug() << menuItem->checkType << menuItem->checked << menuItem->menuHasCheckableItems << menuItem->menuItemType;
-    if (menuItem->checked) {
-        painter->setPen(QPen(palette()->color(QPalette::Text)));
-        painter->drawLine(x, menuItem->rect.height()/2, x + 5, menuItem->rect.height()/2 + 7);
-        painter->drawLine(x + 5, menuItem->rect.height()/2 + 7, x + 13, menuItem->rect.height()/2 - 3);
-        x += 13;
-    }
     int y = menuItem->rect.y() + (menuItem->rect.height() - pixmap.height()) / 2;
     painter->drawPixmap(x, y, pixmap.width(), pixmap.height(), pixmap);
 }

@@ -20,6 +20,8 @@ public:
 
     void init();
 
+    void setApplicationStyle(QStyle* style);
+
 private:
     Q_DECLARE_PUBLIC(UApplication)
     Q_DISABLE_COPY(UApplicationPrivate)
@@ -43,6 +45,14 @@ void UApplicationPrivate::init()
     q->setApplicationName("UTK");
 }
 
+void UApplicationPrivate::setApplicationStyle(QStyle* style)
+{
+    Q_Q(UApplication);
+
+    q->setStyle(style);
+    q->setPalette(style->standardPalette());
+}
+
 UApplication::UApplication(const QString &appId, int &argc, char** argv)
     : QtSingleApplication(appId, argc, argv)
     , d_ptr(new UApplicationPrivate(this))
@@ -55,10 +65,21 @@ UApplication::~UApplication()
 {
 }
 
-void UApplication::setAppStyle(QStyle *style)
+UTheme::ThemeType UApplication::applicationTheme()
 {
-    setStyle(style);
-    setPalette(style->standardPalette());
+    auto ustyle = qobject_cast<UProxyStyle*>(style());
+    return ustyle ? ustyle->theme() : UTheme::ThemeType::LightTheme;
+}
+
+void UApplication::setApplicationTheme(const UTheme::ThemeType &type)
+{
+    Q_D(UApplication);
+
+    QString searchPath = QLatin1String(":/icons");
+    QIcon::setThemeSearchPaths(QStringList() << searchPath);
+    auto style = new UProxyStyle();
+    style->setTheme(UTheme::DarkTheme);
+    d->setApplicationStyle(style);
 }
 
 void UApplication::initApplicationLog(const QString &fileName)
@@ -120,7 +141,7 @@ void UApplication::changeTranslator(const QLocale::Language &language)
     loadTranslator(d->translationPath, language);
 }
 
-UPalette* UApplication::appPalette()
+UPalette* UApplication::applicationPalette()
 {
     auto ustyle = qobject_cast<UProxyStyle*>(style());
     return ustyle ? ustyle->palette() : nullptr;

@@ -8,7 +8,6 @@
 #include "uapplication.h"
 #include "widgets/uscrollbar.h"
 #include "style/uproxystyle.h"
-
 #include "uwidgetutils.h"
 #include "titleswidget.h"
 #include "titlebar.h"
@@ -22,6 +21,7 @@
 #include <QDebug>
 #include <QScrollArea>
 #include <QLabel>
+#include <QActionGroup>
 
 MainWindow::MainWindow(QWidget* parent)
     : UMainWindow(parent)
@@ -67,29 +67,44 @@ MainWindow::~MainWindow()
 
 void MainWindow::initMenu()
 {
+    QActionGroup* group = new QActionGroup(this);
     HLMenu* menu = new HLMenu(this);
     QAction* about = menu->addAction(tr("About"));
     about->setIcon(QIcon::fromTheme("about"));
     menu->addSeparator();
     HLMenu* menu1 = new HLMenu(this);
     menu1->setTitle("theme");
-    QAction *dark = menu1->addAction("dark");
-    QAction *light = menu1->addAction("light");
-    auto menuAction = menu->addMenu(menu1);
-    menuAction->setCheckable(true);
+    QAction* dark = menu1->addAction("dark");
+    dark->setCheckable(true);
+    group->addAction(dark);
+    QAction* light = menu1->addAction("light");
+    light->setCheckable(true);
+    group->addAction(light);
+    menu->addMenu(menu1);
     QAction* exit = menu->addAction(tr("Exit"));
     addMenu(menu);
 
+    if (uApp->applicationTheme() == UTheme::DarkTheme)
+    {
+        dark->setChecked(true);
+    }
+    else
+    {
+        light->setChecked(true);
+    }
+
     connect(about, &QAction::triggered, this, &MainWindow::handleAbout);
     connect(exit, &QAction::triggered, this, &MainWindow::handleQuit);
-    connect(dark, &QAction::triggered, this, [=](){
+    connect(dark, &QAction::triggered, this, [ = ]()
+    {
         if (auto style = qobject_cast<UProxyStyle*>(uApp->style()))
         {
             style->setTheme(UTheme::DarkTheme);
             uApp->setPalette(style->standardPalette());
         }
     });
-    connect(light, &QAction::triggered, this, [=](){
+    connect(light, &QAction::triggered, this, [ = ]()
+    {
         if (auto style = qobject_cast<UProxyStyle*>(uApp->style()))
         {
             style->setTheme(UTheme::LightTheme);

@@ -55,7 +55,7 @@ void UDialog::paintEvent(QPaintEvent* event)
     painter.setBrush(palette().color(QPalette::Base));
     painter.drawPath(rectPath);
 
-    QColor color = uApp->appPalette()->color(QPalette::Shadow);
+    QColor color = uApp->applicationPalette()->color(QPalette::Shadow);
     int arr[8] = {10, 20, 30, 40, 50, 80, 120, 150};
     for (int i = 0; i < margin; i++)
     {

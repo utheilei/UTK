@@ -3,6 +3,7 @@
 
 #include "singleapplication/qtsingleapplication.h"
 #include "logger/logger.h"
+#include "style/utheme.h"
 
 #define uApp (static_cast<UApplication *>(QApplication::instance()))
 
@@ -19,7 +20,8 @@ public:
     UApplication(const QString &appId, int &argc, char** argv);
     ~UApplication() override;
 
-    void setAppStyle(QStyle *style);
+    UTheme::ThemeType applicationTheme();
+    void setApplicationTheme(const UTheme::ThemeType &type);
 
     void initApplicationLog(const QString &fileName);
 
@@ -31,7 +33,7 @@ public:
 
     void changeTranslator(const QLocale::Language &language);
 
-    UPalette* appPalette();
+    UPalette* applicationPalette();
 
     void setAboutDialog(UAboutDialog* dialog);
     UAboutDialog* aboutDialog();

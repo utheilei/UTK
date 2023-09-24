@@ -16,6 +16,10 @@ if (WIN32)
     set(CMAKE_CXX_FLAGS "-mwindows")
 endif()
 
+if(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Debug"))
+    add_definitions(-DBUILD_TYPE_DEBUG)
+endif()
+
 # Find the QtWidgets library
 find_package(Qt5Widgets CONFIG REQUIRED)
 find_package(Qt5Core CONFIG REQUIRED)
