@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(utkwidget)
+project(UTK)
 
 set(PROJECT_NAME "UtkWidget")
 set(PROJECT_DESCRIPTION "Union Tool Kit for Qt applications")
@@ -12,9 +12,14 @@ set(PROJECT_VERSION_PATCH 1)
 set(PROJECT_VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
 
 # Build a shared library by default
-option(BUILD_SHARED_LIBS "Build UtkWidget as a shared library" ON)
-if(BUILD_SHARED_LIBS)
+option(BUILD_Widget_SHARED_LIBS "Build UtkWidget as a shared library" ON)
+if(BUILD_Widget_SHARED_LIBS)
     add_subdirectory(src)
+endif()
+
+option(BUILD_CORE_SHARED_LIBS "Build UtkCore as a shared library" ON)
+if(BUILD_CORE_SHARED_LIBS)
+    add_subdirectory(core)
 endif()
 
 set(CMAKE_AUTOMOC ON)
