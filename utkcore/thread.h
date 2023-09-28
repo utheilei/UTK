@@ -1,7 +1,7 @@
 #ifndef THREAD_H
 #define THREAD_H
 
-#include "utkcore_export.h"
+#include "utkcore_global.h"
 
 #include <future>
 #include <functional>

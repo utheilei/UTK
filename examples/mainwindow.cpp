@@ -11,6 +11,7 @@
 #include "uwidgetutils.h"
 #include "titleswidget.h"
 #include "titlebar.h"
+#include "messagedispatcher.h"
 
 #include <QBoxLayout>
 #include <QIcon>
@@ -59,6 +60,12 @@ MainWindow::MainWindow(QWidget* parent)
     initContent();
     initConnection();
     m_listview->setCurrentIndex(m_listview->model()->index(0, 0));
+
+    UMessageDispatcher::instance()->registerEvent(1, std::bind(&MainWindow::test, this, std::placeholders::_1));
+    auto res = std::make_shared<UMessageResult>();
+    UMessageDispatcher::instance()->sendMessage(1, std::make_shared<UMessage>(1, 1, "test"), std::move(res));
+    int code = UMessageDispatcher::instance()->postMessage(1, std::make_shared<UMessage>(1, 1, "test"));
+    qDebug() << res->msgCode << res->msgResult << code;
 }
 
 MainWindow::~MainWindow()
@@ -200,6 +207,12 @@ void MainWindow::initConnection()
     });
 
     connect(m_titlesWidget, &QListView::clicked, this, &MainWindow::onChangeCenterWidget);
+}
+
+std::shared_ptr<UMessageResult> MainWindow::test(std::shared_ptr<UMessage> msg)
+{
+    qDebug() << msg->msgId << msg->msgType << msg->msgData;
+    return std::make_shared<UMessageResult>(true, "aaa");
 }
 
 void MainWindow::handleAbout()

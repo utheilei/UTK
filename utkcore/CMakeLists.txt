@@ -1,0 +1,29 @@
+project(utkcore LANGUAGES CXX)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
+
+FILE(GLOB HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+)
+
+FILE(GLOB SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+)
+
+set(PROJECT_SOURCES
+    ${HEADERS}
+    ${SOURCES}
+)
+
+add_library(utkcore SHARED ${PROJECT_SOURCES})
+
+target_link_libraries(utkcore PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+
+target_compile_definitions(utkcore PRIVATE UTKCORE_LIBRARY)

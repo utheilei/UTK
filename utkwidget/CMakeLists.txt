@@ -47,9 +47,9 @@ set(PROJECT_SOURCES
     ${SOURCES}
 )
 
-add_library(utkwidget ${PROJECT_SOURCES} ${qrc_FILES})
-target_link_libraries(utkwidget PUBLIC
-        Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Svg Qt5::Network PRIVATE
+add_library(utkwidget SHARED ${PROJECT_SOURCES} ${qrc_FILES})
+target_link_libraries(utkwidget PRIVATE
+        Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Svg Qt5::Network
         Qt5::GuiPrivate
         Qt5::WidgetsPrivate
 )

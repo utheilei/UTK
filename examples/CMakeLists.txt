@@ -23,7 +23,8 @@ find_package(Qt5Core CONFIG REQUIRED)
 find_package(Qt5Svg CONFIG REQUIRED)
 find_package(Qt5Network CONFIG REQUIRED)
 
-include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/utkwidget)
+include_directories(${CMAKE_SOURCE_DIR}/utkcore)
 include_directories(${Qt5Widgets_INCLUDE_DIRS} ${Qt5Network_INCLUDE_DIRS})
 add_definitions(${Qt5Widgets_DEFINITIONS})
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS})
@@ -36,7 +37,6 @@ FILE(GLOB SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
 )
 
-
 qt5_add_resources(qrc_FILES ${CMAKE_CURRENT_SOURCE_DIR}/resouces.qrc)
 
 set(PROJECT_SOURCES
@@ -46,5 +46,5 @@ set(PROJECT_SOURCES
 
 add_executable(Demo ${PROJECT_SOURCES} ${qrc_FILES})
 target_link_libraries(Demo PUBLIC
-        Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Svg Qt5::Network utkwidget
+        Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Svg Qt5::Network utkwidget utkcore
 )

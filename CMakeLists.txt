@@ -14,12 +14,12 @@ set(PROJECT_VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_
 # Build a shared library by default
 option(BUILD_Widget_SHARED_LIBS "Build UtkWidget as a shared library" ON)
 if(BUILD_Widget_SHARED_LIBS)
-    add_subdirectory(src)
+    add_subdirectory(utkwidget)
 endif()
 
 option(BUILD_CORE_SHARED_LIBS "Build UtkCore as a shared library" ON)
 if(BUILD_CORE_SHARED_LIBS)
-    add_subdirectory(core)
+    add_subdirectory(utkcore)
 endif()
 
 set(CMAKE_AUTOMOC ON)

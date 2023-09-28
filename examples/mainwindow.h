@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "message.h"
 #include "umainwindow.h"
 
 #include <QMap>
@@ -27,6 +28,8 @@ public:
     void initContent();
 
     void initConnection();
+    
+    std::shared_ptr<UMessageResult> test(std::shared_ptr<UMessage> msg);
 
 signals:
 
