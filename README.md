@@ -1,7 +1,16 @@
 # utkwidget
 
 #### 介绍
-UTK(union tool kit)是基于Qt开发的一整套简单且实用的通用开发框架，有助于开发者快速进行项目开发
+UTK(union tool kit)是基于Qt开发的一整套简单且实用的通用开发框架平台，有助于开发者快速进行项目开发，分为utkwidget、utkcore、example三个模块；
+
+utkwidget：
+基础控件库，统一样式，颜色，主题风格，支持亮色暗色主题切换，换肤效果，依赖Qt5::Core，Qt5::Widgets，Qt5Svg，Qt5Network模块
+
+utkcore：
+提供除UI以外的类的封装，比如：线程，同步，异步消息机制，xml，ini配置文件解析等，只依赖Qt5::Core模块
+
+example：
+代码示例，便于开发者快速了解如何使用
 
 #### 软件架构
 软件架构说明
