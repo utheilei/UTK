@@ -9,9 +9,7 @@ UTK(union tool kit)是基于Qt开发的一整套简单且实用的通用开发�
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  cmake 3.10 + Qt 5.15.2
 
 #### 使用说明
 
