@@ -1,10 +1,10 @@
-#ifndef MESSAGEDISPATCHER_H
-#define MESSAGEDISPATCHER_H
+#ifndef UMESSAGEDISPATCHER_H
+#define UMESSAGEDISPATCHER_H
 
-#include "messageinterface.h"
+#include "umessageinterface.h"
 
 class UMessageDispatcherPrivate;
-class UTKCORE_EXPORT UMessageDispatcher : public MessageInterface
+class UTKCORE_EXPORT UMessageDispatcher : public UMessageInterface
 {
 public:
     static UMessageDispatcher* instance();
@@ -24,4 +24,4 @@ private:
     Q_DECLARE_PRIVATE(UMessageDispatcher)
 };
 
-#endif // MESSAGEDISPATCHER_H
+#endif // UMESSAGEDISPATCHER_H

@@ -1,7 +1,7 @@
-#ifndef MESSAGE_H
-#define MESSAGE_H
+#ifndef UMESSAGE_H
+#define UMESSAGE_H
 
-#include "utkcore_global.h"
+#include "../utkcore_global.h"
 
 #include <QVariant>
 
@@ -28,4 +28,4 @@ public:
     QVariant msgResult;
 };
 
-#endif // MESSAGE_H
+#endif // UMESSAGE_H

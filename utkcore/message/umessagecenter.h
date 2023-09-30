@@ -1,7 +1,7 @@
-#ifndef MESSAGECENTER_H
-#define MESSAGECENTER_H
+#ifndef UMESSAGECENTER_H
+#define UMESSAGECENTER_H
 
-#include "messageinterface.h"
+#include "umessageinterface.h"
 
 class UMessageCenterPrivate;
 class UTKCORE_EXPORT UMessageCenter
@@ -9,11 +9,11 @@ class UTKCORE_EXPORT UMessageCenter
 public:
     static UMessageCenter* instance();
 
-    void addMessageHandler(const QString &name, IMessageHandler* handler);
+    void addMessageHandler(const QString &name, UIMessageHandler* handler);
 
     void removeMessageHandler(const QString &name);
 
-    IMessageHandler* handler(const QString &name);
+    UIMessageHandler* handler(const QString &name);
 
     int sendMessage(const QString &name, std::shared_ptr<UMessage> req, std::shared_ptr<UMessageResult> res);
 
@@ -28,4 +28,4 @@ private:
     Q_DECLARE_PRIVATE(UMessageCenter)
 };
 
-#endif // MESSAGECENTER_H
+#endif // UMESSAGECENTER_H

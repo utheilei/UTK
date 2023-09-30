@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "message.h"
+#include <message/UMessage>
 #include "umainwindow.h"
 
 #include <QMap>

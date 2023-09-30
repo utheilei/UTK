@@ -1,5 +1,5 @@
-#include "messagedispatcher.h"
-#include "messageeventhandler.h"
+#include "umessagedispatcher.h"
+#include "umessageeventhandler.h"
 
 #include <QMutex>
 #include <QCoreApplication>
@@ -89,7 +89,7 @@ void UMessageDispatcher::handleMessage(std::shared_ptr<UMessage> req)
 }
 
 UMessageDispatcher::UMessageDispatcher()
-    : MessageInterface(), d_ptr(new UMessageDispatcherPrivate(this))
+    : UMessageInterface(), d_ptr(new UMessageDispatcherPrivate(this))
 {
 }
 

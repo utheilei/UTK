@@ -11,7 +11,9 @@
 #include "uwidgetutils.h"
 #include "titleswidget.h"
 #include "titlebar.h"
-#include "messagedispatcher.h"
+
+#include <message/UMessageDispatcher>
+#include <thread/UThread>
 
 #include <QBoxLayout>
 #include <QIcon>
@@ -66,6 +68,13 @@ MainWindow::MainWindow(QWidget* parent)
     UMessageDispatcher::instance()->sendMessage(1, std::make_shared<UMessage>(1, 1, "test"), std::move(res));
     int code = UMessageDispatcher::instance()->postMessage(1, std::make_shared<UMessage>(1, 1, "test"));
     qDebug() << res->msgCode << res->msgResult << code;
+
+    QThread *thread = UThread::createFuture<std::shared_ptr<UMessageResult>>(std::bind(&MainWindow::test, this, std::make_shared<UMessage>()));
+    connect(thread, &QThread::finished, this, [=](){
+        auto s = dynamic_cast<QThreadCreateTaskThread<std::shared_ptr<UMessageResult>>*>(sender());
+        qDebug() << "UThread finished" << s->getResult()->msgResult;
+    });
+    thread->start();
 }
 
 MainWindow::~MainWindow()
@@ -211,7 +220,7 @@ void MainWindow::initConnection()
 
 std::shared_ptr<UMessageResult> MainWindow::test(std::shared_ptr<UMessage> msg)
 {
-    qDebug() << msg->msgId << msg->msgType << msg->msgData;
+    qDebug() << msg->msgId << msg->msgType << msg->msgData << QThread::currentThreadId();
     return std::make_shared<UMessageResult>(true, "aaa");
 }
 
