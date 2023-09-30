@@ -30,6 +30,8 @@ int main(int argc, char* argv[])
     app.setApplicationName(QObject::tr("UTK"));
     app.setApplicationVersion("1.0");
 
+    app.loadTranslator(QString("%1/translations/%2").arg(app.applicationDirPath()).arg("example"), QLocale::Chinese);
+
     qInfo() << "========== Application is start ==========" << Qt::endl;
 
     MainWindow w;

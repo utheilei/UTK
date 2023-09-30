@@ -105,15 +105,16 @@ void UApplication::loadTranslator(const QString &path, const QLocale::Language &
     Q_D(UApplication);
 
     d->translationPath = path;
-    QString translatorFileName;
+    qInfo() << "translation filePath:" << d->translationPath;
+    QString translatorFileName = "";
 
     if (QLocale::Language::English == language)
     {
-        translatorFileName = QString("%1/translations/%2_en.qm").arg(path).arg(applicationName());
+        translatorFileName = QString("%1_en.qm").arg(path);
     }
     else if (QLocale::Language::Chinese == language)
     {
-        translatorFileName = QString("%1/translations/%2_zh_CN.qm").arg(path).arg(applicationName());
+        translatorFileName = QString("%1_zh_CN.qm").arg(path);
     }
 
     QFile file(translatorFileName);

@@ -5,7 +5,7 @@
 
 #include <QDialog>
 
-class TitleBar;
+class UTitleBar;
 class QVBoxLayout;
 class UTKWIDGET_EXPORT UDialog : public QDialog
 {
@@ -23,7 +23,7 @@ protected:
     void paintEvent(QPaintEvent* event) Q_DECL_OVERRIDE;
 
 private:
-    TitleBar* titleBar = Q_NULLPTR;
+    UTitleBar* titleBar = Q_NULLPTR;
     QVBoxLayout* m_mainLayout = Q_NULLPTR;
     int margin = 8;
 };

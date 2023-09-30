@@ -12,7 +12,7 @@
 #include <QPainter>
 #include <QPainterPath>
 
-TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
+UTitleBar::UTitleBar(QWidget *parent) : QWidget(parent)
 {
     setFixedHeight(50);
     setWindowFlags(Qt::FramelessWindowHint);
@@ -57,9 +57,9 @@ TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
     m_closeButton->setRadius(15);
     m_closeButton->setRadiuPosition(StyleButton::TopRight);
 
-    m_minimizeButton->setToolTip("Minimize");
-    m_maximizeButton->setToolTip("Maximize");
-    m_closeButton->setToolTip("Close");
+    m_minimizeButton->setToolTip(tr("Minimize"));
+    m_maximizeButton->setToolTip(tr("Maximize"));
+    m_closeButton->setToolTip(tr("Close"));
 
     m_layout = new QHBoxLayout;
     m_layout->addSpacing(10);
@@ -74,9 +74,9 @@ TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
     m_layout->setContentsMargins(0, 0, 0, 0);
     setLayout(m_layout);
 
-    connect(m_minimizeButton, &QPushButton::clicked, this, &TitleBar::minimizeButtonClicked);
-    connect(m_maximizeButton, &QPushButton::clicked, this, &TitleBar::maximizeButtonClicked);
-    connect(m_closeButton, &QPushButton::clicked, this, &TitleBar::closeButtonClicked);
+    connect(m_minimizeButton, &QPushButton::clicked, this, &UTitleBar::minimizeButtonClicked);
+    connect(m_maximizeButton, &QPushButton::clicked, this, &UTitleBar::maximizeButtonClicked);
+    connect(m_closeButton, &QPushButton::clicked, this, &UTitleBar::closeButtonClicked);
     connect(m_meunBtn, &QPushButton::clicked, this, [=](){
         QPoint pos = mapToGlobal(m_meunBtn->geometry().bottomLeft());
         if (m_menu)
@@ -84,33 +84,33 @@ TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
     });
 }
 
-void TitleBar::setWindowTitle(const QString &title)
+void UTitleBar::setWindowTitle(const QString &title)
 {
     m_titleLabel->setAlignment(Qt::AlignCenter);
     m_titleLabel->setText(title);
 }
 
-void TitleBar::setTitleBarIcon(const QIcon& icon)
+void UTitleBar::setTitleBarIcon(const QIcon& icon)
 {
     m_iconLabel->setPixmap(icon.pixmap(m_iconLabel->size()));
 }
 
-void TitleBar::setMenuVisible(bool visible)
+void UTitleBar::setMenuVisible(bool visible)
 {
     m_meunBtn->setVisible(visible);
 }
 
-void TitleBar::setMinButtonVisible(bool visible)
+void UTitleBar::setMinButtonVisible(bool visible)
 {
     m_minimizeButton->setVisible(visible);
 }
 
-void TitleBar::setMaxButtonVisible(bool visible)
+void UTitleBar::setMaxButtonVisible(bool visible)
 {
     m_maximizeButton->setVisible(visible);
 }
 
-void TitleBar::setBackgroundColor(const QColor &color)
+void UTitleBar::setBackgroundColor(const QColor &color)
 {
     if (m_color != color) {
         m_color = color;
@@ -118,7 +118,7 @@ void TitleBar::setBackgroundColor(const QColor &color)
     }
 }
 
-void TitleBar::setMenu(QMenu *menu)
+void UTitleBar::setMenu(QMenu *menu)
 {
     if (m_menu) {
         m_menu->deleteLater();
@@ -128,12 +128,12 @@ void TitleBar::setMenu(QMenu *menu)
     m_menu = menu;
 }
 
-QMenu *TitleBar::menu() const
+QMenu *UTitleBar::menu() const
 {
     return m_menu;
 }
 
-void TitleBar::setRadius(int radius)
+void UTitleBar::setRadius(int radius)
 {
     if (m_radius != radius) {
         m_radius = radius;
@@ -141,12 +141,12 @@ void TitleBar::setRadius(int radius)
     }
 }
 
-void TitleBar::insertWidget(int index, QWidget *widget)
+void UTitleBar::insertWidget(int index, QWidget *widget)
 {
     m_layout->insertWidget(index, widget);
 }
 
-void TitleBar::paintEvent(QPaintEvent *event)
+void UTitleBar::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
@@ -165,7 +165,7 @@ void TitleBar::paintEvent(QPaintEvent *event)
     painter.fillPath(rectPath, m_color.isValid() ? m_color : palette().color(QPalette::Base));
 }
 
-void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
+void UTitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if (m_maximizeButton->isVisible())
         m_maximizeButton->click();
@@ -173,7 +173,7 @@ void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
     QWidget::mouseDoubleClickEvent(event);
 }
 
-void TitleBar::mousePressEvent(QMouseEvent *event)
+void UTitleBar::mousePressEvent(QMouseEvent *event)
 {
     // 鼠标左键按下事件
     if (event->button() == Qt::LeftButton) {
@@ -186,7 +186,7 @@ void TitleBar::mousePressEvent(QMouseEvent *event)
     QWidget::mousePressEvent(event);
 }
 
-void TitleBar::mouseMoveEvent(QMouseEvent *event)
+void UTitleBar::mouseMoveEvent(QMouseEvent *event)
 {
     // 持续按住才做对应事件
     if(m_leftButtonPressed) {
@@ -201,7 +201,7 @@ void TitleBar::mouseMoveEvent(QMouseEvent *event)
     QWidget::mouseMoveEvent(event);
 }
 
-void TitleBar::mouseReleaseEvent(QMouseEvent *event)
+void UTitleBar::mouseReleaseEvent(QMouseEvent *event)
 {
     // 鼠标左键释放
     if (event->button() == Qt::LeftButton) {
@@ -212,7 +212,7 @@ void TitleBar::mouseReleaseEvent(QMouseEvent *event)
     QWidget::mouseReleaseEvent(event);
 }
 
-bool TitleBar::eventFilter(QObject *obj, QEvent *event)
+bool UTitleBar::eventFilter(QObject *obj, QEvent *event)
 {
     switch(event->type()) {
     //设置标题
@@ -244,12 +244,14 @@ bool TitleBar::eventFilter(QObject *obj, QEvent *event)
         updateMaximize();
         return true;
     }
+    default:
+        break;
     }
 
     return QWidget::eventFilter(obj, event);
 }
 
-void TitleBar::resizeEvent(QResizeEvent *event)
+void UTitleBar::resizeEvent(QResizeEvent *event)
 {
     m_titleLabel->move((this->width()-m_titleLabel->width())/2,
                        (this->height()-m_titleLabel->height())/2);
@@ -257,7 +259,7 @@ void TitleBar::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
-void TitleBar::updateMaximize()
+void UTitleBar::updateMaximize()
 {
     QWidget *pWindow = this->window();
     if (pWindow->isTopLevel()) {

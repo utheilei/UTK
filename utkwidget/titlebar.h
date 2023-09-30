@@ -11,11 +11,11 @@ class QMenu;
 class StyleButton;
 class QHBoxLayout;
 
-class UTKWIDGET_EXPORT TitleBar : public QWidget
+class UTKWIDGET_EXPORT UTitleBar : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TitleBar(QWidget* parent = nullptr);
+    explicit UTitleBar(QWidget* parent = nullptr);
 
     void setWindowTitle(const QString &title);
     void setTitleBarIcon(const QIcon &icon);

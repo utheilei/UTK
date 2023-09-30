@@ -20,6 +20,23 @@ include_directories(${Qt5Widgets_INCLUDE_DIRS} ${Qt5Network_INCLUDE_DIRS})
 add_definitions(${Qt5Widgets_DEFINITIONS})
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS})
 
+#生成ts文件的文件夹
+set(TS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/translations")
+
+set(TS_FILES
+    "${TS_DIR}/utkwidget_zh_CN.ts"
+    "${TS_DIR}/utkwidget_en.ts"
+)
+
+#模拟更新和发布的命令代码
+find_program(LUPDATE_EXECUTABLE lupdate)
+
+#生成ts和qm文件
+foreach(_ts_file ${TS_FILES})
+    execute_process(
+        COMMAND ${LUPDATE_EXECUTABLE} -recursive ${CMAKE_CURRENT_SOURCE_DIR} -ts ${_ts_file})
+endforeach()
+
 FILE(GLOB HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/*.h

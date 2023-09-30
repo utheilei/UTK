@@ -12,8 +12,8 @@ UDialog::UDialog(QWidget* parent, Qt::WindowFlags f) : QDialog(parent, f)
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
     setAttribute(Qt::WA_TranslucentBackground);
     setMinimumWidth(420);
-
-    titleBar = new TitleBar(this);
+    
+    titleBar = new UTitleBar(this);
     titleBar->setMenuVisible(false);
     titleBar->setMinButtonVisible(false);
     titleBar->setMaxButtonVisible(false);
@@ -23,8 +23,8 @@ UDialog::UDialog(QWidget* parent, Qt::WindowFlags f) : QDialog(parent, f)
     m_mainLayout->setContentsMargins(0, 0, 0, 0);
     m_mainLayout->addWidget(titleBar, 0, Qt::AlignTop);
     setLayout(m_mainLayout);
-
-    connect(titleBar, &TitleBar::closeButtonClicked, this, &UDialog::reject);
+    
+    connect(titleBar, &UTitleBar::closeButtonClicked, this, &UDialog::reject);
 }
 
 void UDialog::setTitleIcon(const QIcon &icon)

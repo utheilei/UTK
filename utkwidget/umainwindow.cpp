@@ -27,8 +27,8 @@ UMainWindow::UMainWindow(QWidget* parent) : UWidget(parent)
     setMouseTracking(true);
     setMargins(8);
     addDropShadowEffect(true);
-
-    m_titleBar = new TitleBar(this);
+    
+    m_titleBar = new UTitleBar(this);
     installEventFilter(m_titleBar);
     m_layout = new QVBoxLayout;
     m_layout->setContentsMargins(0, 0, 0, 0);
@@ -47,10 +47,10 @@ UMainWindow::UMainWindow(QWidget* parent) : UWidget(parent)
 
 void UMainWindow::initConnections()
 {
-    connect(m_titleBar, &TitleBar::windowStateChange, this, &UMainWindow::onWindowStateChange);
-    connect(m_titleBar, &TitleBar::minimizeButtonClicked, this, &UMainWindow::onMinimizeButtonClicked);
-    connect(m_titleBar, &TitleBar::maximizeButtonClicked, this, &UMainWindow::onMaximizeButtonClicked);
-    connect(m_titleBar, &TitleBar::closeButtonClicked, this, &UMainWindow::onCloseButtonClicked);
+    connect(m_titleBar, &UTitleBar::windowStateChange, this, &UMainWindow::onWindowStateChange);
+    connect(m_titleBar, &UTitleBar::minimizeButtonClicked, this, &UMainWindow::onMinimizeButtonClicked);
+    connect(m_titleBar, &UTitleBar::maximizeButtonClicked, this, &UMainWindow::onMaximizeButtonClicked);
+    connect(m_titleBar, &UTitleBar::closeButtonClicked, this, &UMainWindow::onCloseButtonClicked);
 }
 
 void UMainWindow::addMenu(QMenu* menu)
@@ -119,7 +119,7 @@ void UMainWindow::onCloseButtonClicked()
     close();
 }
 
-TitleBar* UMainWindow::titleBar() const
+UTitleBar* UMainWindow::titleBar() const
 {
     return m_titleBar;
 }

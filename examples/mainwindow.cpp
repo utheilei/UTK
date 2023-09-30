@@ -89,11 +89,11 @@ void MainWindow::initMenu()
     about->setIcon(QIcon::fromTheme("about"));
     menu->addSeparator();
     HLMenu* menu1 = new HLMenu(this);
-    menu1->setTitle("theme");
-    QAction* dark = menu1->addAction("dark");
+    menu1->setTitle(tr("theme"));
+    QAction* dark = menu1->addAction(tr("dark"));
     dark->setCheckable(true);
     group->addAction(dark);
-    QAction* light = menu1->addAction("light");
+    QAction* light = menu1->addAction(tr("light"));
     light->setCheckable(true);
     group->addAction(light);
     menu->addMenu(menu1);

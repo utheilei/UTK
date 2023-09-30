@@ -3,7 +3,7 @@
 
 #include "uwidget.h"
 
-class TitleBar;
+class UTitleBar;
 class QVBoxLayout;
 class QMenu;
 
@@ -33,8 +33,8 @@ public:
     void setContentWidget(QWidget* widget);
 
     QWidget* contentWidget() const;
-
-    TitleBar* titleBar() const;
+    
+    UTitleBar* titleBar() const;
 
     void moveToCenter();
 
@@ -68,7 +68,7 @@ private:
     bool m_bMousePressed = false;         // 鼠标是否按下
     int m_nMouseResize;                  // 鼠标设置大小
     bool m_bMouseResizePressed = false;   // 设置大小的按下
-    TitleBar* m_titleBar = Q_NULLPTR;
+    UTitleBar* m_titleBar = Q_NULLPTR;
     QVBoxLayout* m_layout = Q_NULLPTR;
     QVBoxLayout* m_mainLayout = Q_NULLPTR;
     QWidget* m_contentWidget = Q_NULLPTR;

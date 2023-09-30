@@ -31,6 +31,8 @@ public:
 
     void loadTranslator(const QString &path, const QLocale::Language &language = QLocale::system().language());
 
+    void loadTranslator(const QStringList &path, const QLocale::Language &language = QLocale::system().language());
+
     void changeTranslator(const QLocale::Language &language);
 
     UPalette* applicationPalette();

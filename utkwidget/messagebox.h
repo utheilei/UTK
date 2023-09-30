@@ -5,7 +5,7 @@
 
 #include <QMessageBox>
 
-class TitleBar;
+class UTitleBar;
 
 class UTKWIDGET_EXPORT MessageBox : public QMessageBox
 {
@@ -25,7 +25,7 @@ protected:
 signals:
 
 private:
-    TitleBar* titleBar = Q_NULLPTR;
+    UTitleBar* titleBar = Q_NULLPTR;
     int margin = 8;
 };
 

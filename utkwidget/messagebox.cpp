@@ -22,8 +22,8 @@ MessageBox::MessageBox(QWidget* parent) : QMessageBox(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
     setAttribute(Qt::WA_TranslucentBackground);
-
-    titleBar = new TitleBar(this);
+    
+    titleBar = new UTitleBar(this);
     titleBar->setMenuVisible(false);
     titleBar->setMinButtonVisible(false);
     titleBar->setMaxButtonVisible(false);
@@ -31,8 +31,8 @@ MessageBox::MessageBox(QWidget* parent) : QMessageBox(parent)
     setContentsMargins(margins.left() + margin, titleBar->height() + margin,
                        margins.right() + margin, margins.bottom() + margin);
     titleBar->setTitleBarIcon(qApp->windowIcon());
-
-    connect(titleBar, &TitleBar::closeButtonClicked, this, &MessageBox::reject);
+    
+    connect(titleBar, &UTitleBar::closeButtonClicked, this, &MessageBox::reject);
 }
 
 void MessageBox::setTitleIcon(const QIcon &icon)
