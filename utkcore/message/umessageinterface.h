@@ -1,16 +1,16 @@
-#ifndef MESSAGEINTERFACE_H
-#define MESSAGEINTERFACE_H
+#ifndef UMESSAGEINTERFACE_H
+#define UMESSAGEINTERFACE_H
 
-#include "message.h"
+#include "umessage.h"
 
 #include <functional>
 #include <memory>
 
-class UTKCORE_EXPORT MessageInterface
+class UTKCORE_EXPORT UMessageInterface
 {
 public:
-    MessageInterface() {};
-    virtual ~MessageInterface() {};
+    UMessageInterface() {};
+    virtual ~UMessageInterface() {};
 
     virtual void registerEvent(int msgId, std::function<std::shared_ptr<UMessageResult>(std::shared_ptr<UMessage> msg)> &&func) = 0;
     virtual int unregisterEvent(int msgId) = 0;
@@ -19,13 +19,13 @@ public:
     virtual void handleMessage(std::shared_ptr<UMessage> req) = 0;
 };
 
-class UTKCORE_EXPORT IMessageHandler
+class UTKCORE_EXPORT UIMessageHandler
 {
 public:
-    IMessageHandler() {}
-    virtual ~IMessageHandler() {}
+    UIMessageHandler() {}
+    virtual ~UIMessageHandler() {}
 
     virtual std::shared_ptr<UMessageResult> handleMessage(std::shared_ptr<UMessage> msg) = 0;
 };
 
-#endif // MESSAGEINTERFACE_H
+#endif // UMESSAGEINTERFACE_H

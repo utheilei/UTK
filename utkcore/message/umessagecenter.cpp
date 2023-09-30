@@ -1,5 +1,5 @@
-#include "messagecenter.h"
-#include "messageeventhandler.h"
+#include "umessagecenter.h"
+#include "umessageeventhandler.h"
 
 #include <QWriteLocker>
 #include <QCoreApplication>
@@ -16,7 +16,7 @@ public:
     UMessageCenter* q_ptr = nullptr;
 private:
     QReadWriteLock lock;
-    QMap<QString, IMessageHandler*> handlers;
+    QMap<QString, UIMessageHandler*> handlers;
     QScopedPointer<UMessageEventHandler> eventHandler;
 };
 
@@ -26,7 +26,7 @@ UMessageCenter* UMessageCenter::instance()
     return &center;
 }
 
-void UMessageCenter::addMessageHandler(const QString &name, IMessageHandler* handler)
+void UMessageCenter::addMessageHandler(const QString &name, UIMessageHandler* handler)
 {
     Q_D(UMessageCenter);
 
@@ -42,7 +42,7 @@ void UMessageCenter::removeMessageHandler(const QString &name)
     d->handlers.remove(name);
 }
 
-IMessageHandler* UMessageCenter::handler(const QString &name)
+UIMessageHandler* UMessageCenter::handler(const QString &name)
 {
     Q_D(UMessageCenter);
 

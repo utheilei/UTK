@@ -1,7 +1,7 @@
-#ifndef THREAD_H
-#define THREAD_H
+#ifndef UTHREAD_H
+#define UTHREAD_H
 
-#include "utkcore_global.h"
+#include "../utkcore_global.h"
 
 #include <future>
 #include <functional>
@@ -9,7 +9,7 @@
 #include <QThread>
 
 template <class T>
-class UTKCORE_EXPORT QThreadCreateThread : public QThread
+class QThreadCreateThread : public QThread
 {
 public:
     explicit QThreadCreateThread(std::future<T> &&future, std::function<void()> &&callback)
@@ -38,7 +38,7 @@ private:
 };
 
 template <class T>
-class UTKCORE_EXPORT QThreadCreateTaskThread : public QThread
+class QThreadCreateTaskThread : public QThread
 {
 public:
     explicit QThreadCreateTaskThread(std::packaged_task<T()> &&task)
@@ -63,11 +63,11 @@ private:
     T m_result;
 };
 
-class Thread
+class UTKCORE_EXPORT UThread
 {
 public:
-    Thread();
-    ~Thread();
+    UThread();
+    ~UThread();
 
     template <typename R, typename Function, typename... Args, typename FunctionCallback>
     static QThread* create(FunctionCallback &&f1, Function &&f, Args &&... args)
@@ -84,4 +84,4 @@ public:
     }
 };
 
-#endif // THREAD_H
+#endif // UTHREAD_H

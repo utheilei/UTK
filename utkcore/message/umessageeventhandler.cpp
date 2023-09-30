@@ -1,5 +1,5 @@
-#include "messageeventhandler.h"
-#include "messagedispatcher.h"
+#include "umessageeventhandler.h"
+#include "umessagedispatcher.h"
 
 UMessageEvent::UMessageEvent(std::shared_ptr<UMessage> &&msg, Type type)
     : QEvent(type), eventMsg(std::move(msg))
@@ -10,7 +10,7 @@ UMessageEventHandler::UMessageEventHandler(QObject* parent) : QObject(parent)
 {
 }
 
-UMessageObjectEvent::UMessageObjectEvent(IMessageHandler* handler, std::shared_ptr<UMessage> &&msg, Type type)
+UMessageObjectEvent::UMessageObjectEvent(UIMessageHandler* handler, std::shared_ptr<UMessage> &&msg, Type type)
     : UMessageEvent(std::move(msg), type), handlerObject(handler)
 {
 }

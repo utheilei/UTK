@@ -1,7 +1,7 @@
-#ifndef MESSAGEEVENTHANDLER_H
-#define MESSAGEEVENTHANDLER_H
+#ifndef UMESSAGEEVENTHANDLER_H
+#define UMESSAGEEVENTHANDLER_H
 
-#include "messageinterface.h"
+#include "umessageinterface.h"
 
 #include <QEvent>
 #include <QObject>
@@ -19,8 +19,8 @@ public:
 class UMessageObjectEvent: public UMessageEvent
 {
 public:
-    UMessageObjectEvent(IMessageHandler* handler, std::shared_ptr<UMessage> &&msg, Type type = Type(QEvent::User + MessageObjectEventType));
-    IMessageHandler* handlerObject;
+    UMessageObjectEvent(UIMessageHandler* handler, std::shared_ptr<UMessage> &&msg, Type type = Type(QEvent::User + MessageObjectEventType));
+    UIMessageHandler* handlerObject;
 };
 
 class UMessageEventHandler : public QObject
@@ -33,4 +33,4 @@ protected:
     void customEvent(QEvent* event) override;
 };
 
-#endif // MESSAGEEVENTHANDLER_H
+#endif // UMESSAGEEVENTHANDLER_H
