@@ -1,8 +1,34 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/about.png</file>
-        <file>images/utkwidget.svg</file>
         <file>icons/dark/icons/title.svg</file>
         <file>icons/light/icons/title.svg</file>
+        <file>icons/dark/icons/utk_button.svg</file>
+        <file>icons/dark/icons/utk_datetime.svg</file>
+        <file>icons/dark/icons/utk_db.svg</file>
+        <file>icons/dark/icons/utk_flag.svg</file>
+        <file>icons/dark/icons/utk_label.svg</file>
+        <file>icons/dark/icons/utk_lampbulb.svg</file>
+        <file>icons/dark/icons/utk_lineedit.svg</file>
+        <file>icons/dark/icons/utk_message.svg</file>
+        <file>icons/dark/icons/utk_network.svg</file>
+        <file>icons/dark/icons/utk_notice.svg</file>
+        <file>icons/dark/icons/utk_painter.svg</file>
+        <file>icons/dark/icons/utk_renew.svg</file>
+        <file>icons/dark/icons/utk_settings.svg</file>
+        <file>icons/dark/icons/utk_statistics.svg</file>
+        <file>icons/light/icons/utk_button.svg</file>
+        <file>icons/light/icons/utk_datetime.svg</file>
+        <file>icons/light/icons/utk_db.svg</file>
+        <file>icons/light/icons/utk_flag.svg</file>
+        <file>icons/light/icons/utk_label.svg</file>
+        <file>icons/light/icons/utk_lampbulb.svg</file>
+        <file>icons/light/icons/utk_lineedit.svg</file>
+        <file>icons/light/icons/utk_message.svg</file>
+        <file>icons/light/icons/utk_network.svg</file>
+        <file>icons/light/icons/utk_notice.svg</file>
+        <file>icons/light/icons/utk_painter.svg</file>
+        <file>icons/light/icons/utk_renew.svg</file>
+        <file>icons/light/icons/utk_settings.svg</file>
+        <file>icons/light/icons/utk_statistics.svg</file>
     </qresource>
 </RCC>

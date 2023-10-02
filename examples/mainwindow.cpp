@@ -11,6 +11,7 @@
 #include "uwidgetutils.h"
 #include "titleswidget.h"
 #include "titlebar.h"
+#include "datetimewidget.h"
 
 #include <message/UMessageDispatcher>
 #include <thread/UThread>
@@ -157,10 +158,10 @@ void MainWindow::initListView()
 {
     const QVector<QString> textList =
     {
-        QObject::tr("Label"), QObject::tr("Button"), QObject::tr("LineEdit"), QObject::tr("defapp"),
-        QObject::tr("personalization"), QObject::tr("network"), QObject::tr("sound"), QObject::tr("datetime"),
-        QObject::tr("power"), QObject::tr("mouse"), QObject::tr("keyboard"), QObject::tr("unionid"),
-        QObject::tr("update"), QObject::tr("systeminfo"), QObject::tr("commoninfo")
+        QObject::tr("Label"), QObject::tr("Button"), QObject::tr("LineEdit"), QObject::tr("datetime"),
+        QObject::tr("developing"), QObject::tr("developing 1"), QObject::tr("developing 2"), QObject::tr("developing 3"),
+        QObject::tr("developing 4"), QObject::tr("developing 5"), QObject::tr("developing 6"), QObject::tr("developing 7"),
+        QObject::tr("developing 8"), QObject::tr("developing 9"), QObject::tr("developing 10")
     };
 
     QStandardItemModel* model = new QStandardItemModel(this);
@@ -190,19 +191,20 @@ void MainWindow::initContent()
     label->setFixedSize(600, 600);
     area->setWidgetResizable(true);
     area->setWidget(label);
-    labelWidget->setBackgroundColor(Qt::red);
     m_mainWidget->addWidget(labelWidget);
     m_listWidget.insert(0, labelWidget);
 
     UWidget* buttonWidget = new UWidget(this);
-    buttonWidget->setBackgroundColor(Qt::green);
     m_mainWidget->addWidget(buttonWidget);
     m_listWidget.insert(1, buttonWidget);
 
     UWidget* comboxLineEditWidget = new UWidget(this);
-    comboxLineEditWidget->setBackgroundColor(Qt::blue);
     m_mainWidget->addWidget(comboxLineEditWidget);
     m_listWidget.insert(2, comboxLineEditWidget);
+
+    DateTimeWidget* dateTimeWidget = new DateTimeWidget(this);
+    m_mainWidget->addWidget(dateTimeWidget);
+    m_listWidget.insert(3, dateTimeWidget);
 }
 
 void MainWindow::initConnection()

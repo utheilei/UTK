@@ -4,27 +4,27 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="88"/>
+        <location filename="../mainwindow.cpp" line="89"/>
         <source>About</source>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="92"/>
+        <location filename="../mainwindow.cpp" line="93"/>
         <source>theme</source>
         <translation>Theme</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="93"/>
+        <location filename="../mainwindow.cpp" line="94"/>
         <source>dark</source>
         <translation>Dark</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="96"/>
+        <location filename="../mainwindow.cpp" line="97"/>
         <source>light</source>
         <translation>Light</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="100"/>
+        <location filename="../mainwindow.cpp" line="101"/>
         <source>Exit</source>
         <translation>Exit</translation>
     </message>
@@ -37,94 +37,138 @@
         <translation>UTK</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="160"/>
+        <location filename="../mainwindow.cpp" line="161"/>
         <location filename="../titleswidget.cpp" line="38"/>
         <source>Label</source>
         <translation>Label</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="160"/>
+        <location filename="../mainwindow.cpp" line="161"/>
         <location filename="../titleswidget.cpp" line="38"/>
         <source>Button</source>
         <translation>Button</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="160"/>
+        <location filename="../mainwindow.cpp" line="161"/>
         <location filename="../titleswidget.cpp" line="38"/>
         <source>LineEdit</source>
         <translation>LineEdit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="160"/>
-        <location filename="../titleswidget.cpp" line="38"/>
+        <location filename="../mainwindow.cpp" line="162"/>
+        <location filename="../titleswidget.cpp" line="39"/>
+        <source>developing</source>
+        <translation>developing</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="162"/>
+        <location filename="../titleswidget.cpp" line="39"/>
+        <source>developing 1</source>
+        <translation>developing 1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="162"/>
+        <location filename="../titleswidget.cpp" line="39"/>
+        <source>developing 2</source>
+        <translation>developing 2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="162"/>
+        <location filename="../titleswidget.cpp" line="39"/>
+        <source>developing 3</source>
+        <translation>developing 3</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="163"/>
+        <location filename="../titleswidget.cpp" line="40"/>
+        <source>developing 4</source>
+        <translation>developing 4</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="163"/>
+        <location filename="../titleswidget.cpp" line="40"/>
+        <source>developing 5</source>
+        <translation>developing 5</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="163"/>
+        <location filename="../titleswidget.cpp" line="40"/>
+        <source>developing 6</source>
+        <translation>developing 6</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="163"/>
+        <location filename="../titleswidget.cpp" line="40"/>
+        <source>developing 7</source>
+        <translation>developing 7</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="164"/>
+        <location filename="../titleswidget.cpp" line="41"/>
+        <source>developing 8</source>
+        <translation>developing 8</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="164"/>
+        <location filename="../titleswidget.cpp" line="41"/>
+        <source>developing 9</source>
+        <translation>developing 9</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="164"/>
+        <location filename="../titleswidget.cpp" line="41"/>
+        <source>developing 10</source>
+        <translation>developing 10</translation>
+    </message>
+    <message>
         <source>defapp</source>
-        <translation>defapp</translation>
+        <translation type="vanished">defapp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="161"/>
-        <location filename="../titleswidget.cpp" line="39"/>
         <source>personalization</source>
-        <translation>personalization</translation>
+        <translation type="vanished">personalization</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="161"/>
-        <location filename="../titleswidget.cpp" line="39"/>
         <source>network</source>
-        <translation>network</translation>
+        <translation type="vanished">network</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="161"/>
-        <location filename="../titleswidget.cpp" line="39"/>
         <source>sound</source>
-        <translation>sound</translation>
+        <translation type="vanished">sound</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="161"/>
-        <location filename="../titleswidget.cpp" line="39"/>
+        <location filename="../titleswidget.cpp" line="38"/>
         <source>datetime</source>
         <translation>datetime</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="162"/>
-        <location filename="../titleswidget.cpp" line="40"/>
         <source>power</source>
-        <translation>power</translation>
+        <translation type="vanished">power</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="162"/>
-        <location filename="../titleswidget.cpp" line="40"/>
         <source>mouse</source>
-        <translation>mouse</translation>
+        <translation type="vanished">mouse</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="162"/>
-        <location filename="../titleswidget.cpp" line="40"/>
         <source>keyboard</source>
-        <translation>keyboard</translation>
+        <translation type="vanished">keyboard</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="162"/>
-        <location filename="../titleswidget.cpp" line="40"/>
         <source>unionid</source>
-        <translation>unionid</translation>
+        <translation type="vanished">unionid</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="163"/>
-        <location filename="../titleswidget.cpp" line="41"/>
         <source>update</source>
-        <translation>update</translation>
+        <translation type="vanished">update</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="163"/>
-        <location filename="../titleswidget.cpp" line="41"/>
         <source>systeminfo</source>
-        <translation>systeminfo</translation>
+        <translation type="vanished">systeminfo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="163"/>
-        <location filename="../titleswidget.cpp" line="41"/>
         <source>commoninfo</source>
-        <translation>commoninfo</translation>
+        <translation type="vanished">commoninfo</translation>
     </message>
 </context>
 </TS>

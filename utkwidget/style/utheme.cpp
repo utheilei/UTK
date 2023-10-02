@@ -92,7 +92,7 @@ void UTheme::setTheme(const ThemeType &type)
             d->palette->setBrush(QPalette::LinkVisited, QColor("#AD4579"));
             d->palette->setBrush(QPalette::AlternateBase, QColor(0, 0, 0, 0.2 * 255));
             d->palette->setBrush(QPalette::ToolTipBase, QColor(45, 45, 45, 0.8 * 255));
-            d->palette->setBrush(QPalette::ToolTipText, QColor("#C0C6D4"));
+            d->palette->setBrush(QPalette::ToolTipText, QColor("#FFFFFF"));
             d->palette->setBrush(QPalette::PlaceholderText, QColor(192, 198, 212, 0.4 * 255));
 
             d->palette->setBrush(UPalette::ItemBackground, QColor(255, 255, 255, 0.05 * 255));

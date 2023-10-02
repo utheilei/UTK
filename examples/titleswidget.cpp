@@ -35,23 +35,23 @@ void TitlesWidget::initItems()
 {
     const QVector<QString> textList =
     {
-        QObject::tr("Label"), QObject::tr("Button"), QObject::tr("LineEdit"), QObject::tr("defapp"),
-        QObject::tr("personalization"), QObject::tr("network"), QObject::tr("sound"), QObject::tr("datetime"),
-        QObject::tr("power"), QObject::tr("mouse"), QObject::tr("keyboard"), QObject::tr("unionid"),
-        QObject::tr("update"), QObject::tr("systeminfo"), QObject::tr("commoninfo")
+        QObject::tr("Label"), QObject::tr("Button"), QObject::tr("LineEdit"), QObject::tr("datetime"),
+        QObject::tr("developing"), QObject::tr("developing 1"), QObject::tr("developing 2"), QObject::tr("developing 3"),
+        QObject::tr("developing 4"), QObject::tr("developing 5"), QObject::tr("developing 6"), QObject::tr("developing 7"),
+        QObject::tr("developing 8"), QObject::tr("developing 9"), QObject::tr("developing 10")
     };
 
     const QList<QString> iconList =
     {
-        "dcc_nav_accounts", "dcc_nav_cloudsync", "dcc_nav_display", "dcc_nav_defapp",
-        "dcc_nav_personalization", "dcc_nav_network", "dcc_nav_sound", "dcc_nav_datetime",
-        "dcc_nav_power", "dcc_nav_mouse", "dcc_nav_keyboard", "dcc_nav_unionid",
-        "dcc_nav_update", "dcc_nav_systeminfo", "dcc_nav_commoninfo"
+        "utk_label", "utk_button", "utk_lineedit", "utk_datetime",
+        "utk_db", "utk_network", "utk_flag", "utk_lampbulb",
+        "utk_message", "utk_notice", "utk_painter", "utk_settings",
+        "utk_statistics", "utk_renew", "title"
     };
 
     for (int i = 0; i < textList.size(); i++)
     {
-        addItem(QIcon::fromTheme("title"), textList[i]);
+        addItem(QIcon::fromTheme(iconList.at(i)), textList[i]);
     }
 }
 

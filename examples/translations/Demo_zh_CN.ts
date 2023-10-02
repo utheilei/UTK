@@ -4,27 +4,27 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="88"/>
+        <location filename="../mainwindow.cpp" line="89"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="92"/>
+        <location filename="../mainwindow.cpp" line="93"/>
         <source>theme</source>
         <translation>主题</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="93"/>
+        <location filename="../mainwindow.cpp" line="94"/>
         <source>dark</source>
         <translation>暗色</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="96"/>
+        <location filename="../mainwindow.cpp" line="97"/>
         <source>light</source>
         <translation>亮色</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="100"/>
+        <location filename="../mainwindow.cpp" line="101"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
@@ -37,94 +37,138 @@
         <translation>UTK</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="160"/>
+        <location filename="../mainwindow.cpp" line="161"/>
         <location filename="../titleswidget.cpp" line="38"/>
         <source>Label</source>
         <translation>文本</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="160"/>
+        <location filename="../mainwindow.cpp" line="161"/>
         <location filename="../titleswidget.cpp" line="38"/>
         <source>Button</source>
         <translation>按钮</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="160"/>
+        <location filename="../mainwindow.cpp" line="161"/>
         <location filename="../titleswidget.cpp" line="38"/>
         <source>LineEdit</source>
         <translation>输入框</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="160"/>
-        <location filename="../titleswidget.cpp" line="38"/>
+        <location filename="../mainwindow.cpp" line="162"/>
+        <location filename="../titleswidget.cpp" line="39"/>
+        <source>developing</source>
+        <translation>开发中</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="162"/>
+        <location filename="../titleswidget.cpp" line="39"/>
+        <source>developing 1</source>
+        <translation>开发中 1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="162"/>
+        <location filename="../titleswidget.cpp" line="39"/>
+        <source>developing 2</source>
+        <translation>开发中 2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="162"/>
+        <location filename="../titleswidget.cpp" line="39"/>
+        <source>developing 3</source>
+        <translation>开发中 3</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="163"/>
+        <location filename="../titleswidget.cpp" line="40"/>
+        <source>developing 4</source>
+        <translation>开发中 4</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="163"/>
+        <location filename="../titleswidget.cpp" line="40"/>
+        <source>developing 5</source>
+        <translation>开发中 5</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="163"/>
+        <location filename="../titleswidget.cpp" line="40"/>
+        <source>developing 6</source>
+        <translation>开发中 6</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="163"/>
+        <location filename="../titleswidget.cpp" line="40"/>
+        <source>developing 7</source>
+        <translation>开发中 7</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="164"/>
+        <location filename="../titleswidget.cpp" line="41"/>
+        <source>developing 8</source>
+        <translation>开发中 8</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="164"/>
+        <location filename="../titleswidget.cpp" line="41"/>
+        <source>developing 9</source>
+        <translation>开发中 9</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="164"/>
+        <location filename="../titleswidget.cpp" line="41"/>
+        <source>developing 10</source>
+        <translation>开发中 10</translation>
+    </message>
+    <message>
         <source>defapp</source>
-        <translation>默认程序</translation>
+        <translation type="vanished">默认程序</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="161"/>
-        <location filename="../titleswidget.cpp" line="39"/>
         <source>personalization</source>
-        <translation>个性化</translation>
+        <translation type="vanished">个性化</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="161"/>
-        <location filename="../titleswidget.cpp" line="39"/>
         <source>network</source>
-        <translation>网络</translation>
+        <translation type="vanished">网络</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="161"/>
-        <location filename="../titleswidget.cpp" line="39"/>
         <source>sound</source>
-        <translation>声音</translation>
+        <translation type="vanished">声音</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="161"/>
-        <location filename="../titleswidget.cpp" line="39"/>
+        <location filename="../titleswidget.cpp" line="38"/>
         <source>datetime</source>
         <translation>时间日期</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="162"/>
-        <location filename="../titleswidget.cpp" line="40"/>
         <source>power</source>
-        <translation>电源</translation>
+        <translation type="vanished">电源</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="162"/>
-        <location filename="../titleswidget.cpp" line="40"/>
         <source>mouse</source>
-        <translation>鼠标</translation>
+        <translation type="vanished">鼠标</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="162"/>
-        <location filename="../titleswidget.cpp" line="40"/>
         <source>keyboard</source>
-        <translation>键盘</translation>
+        <translation type="vanished">键盘</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="162"/>
-        <location filename="../titleswidget.cpp" line="40"/>
         <source>unionid</source>
-        <translation>名称</translation>
+        <translation type="vanished">名称</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="163"/>
-        <location filename="../titleswidget.cpp" line="41"/>
         <source>update</source>
-        <translation>更新</translation>
+        <translation type="vanished">更新</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="163"/>
-        <location filename="../titleswidget.cpp" line="41"/>
         <source>systeminfo</source>
-        <translation>系统信息</translation>
+        <translation type="vanished">系统信息</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="163"/>
-        <location filename="../titleswidget.cpp" line="41"/>
         <source>commoninfo</source>
-        <translation>通用信息</translation>
+        <translation type="vanished">通用信息</translation>
     </message>
 </context>
 </TS>

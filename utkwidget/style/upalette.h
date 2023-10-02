@@ -40,6 +40,7 @@ public:
         return brush(cg, ct).color();
     }
     const QBrush &brush(ColorGroup cg, ColorType ct) const;
+
     inline void setColor(ColorGroup cg, ColorType ct, const QColor &color)
     {
         setBrush(cg, ct, color);
@@ -54,10 +55,9 @@ public:
     }
     void setBrush(ColorGroup cg, ColorType ct, const QBrush &brush);
 
-    inline const QColor &color(ColorType ct) const
-    {
-        return color(Current, ct);
-    }
+    inline const QColor &color(ColorType ct) const { return color(Current, ct); }
+    inline const QBrush &brush(ColorType ct) const { return brush(Current, ct); }
+
     using QPalette::color;
     using QPalette::brush;
     using QPalette::setBrush;
