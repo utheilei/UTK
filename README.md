@@ -12,6 +12,10 @@ utkcore：
 example：
 代码示例，便于开发者快速了解如何使用
 
+软件截图：
+![输入图片说明](doc/example_light.png)
+![输入图片说明](doc/example_dark.png)
+
 #### 软件架构
 软件架构说明
 ![输入图片说明](utk-framework.png)
