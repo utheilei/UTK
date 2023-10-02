@@ -34,12 +34,6 @@ example：
 6.  开发过程中需要图标可以到[阿里巴巴矢量图标库](https://www.iconfont.cn/?spm=a313x.search_index.i3.2.19263a81P9idc9)下载；
 7.  代码严格按照C++和Qt代码规范进行开发；
 
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
 #### 参与贡献
 
 1.  Fork 本仓库
