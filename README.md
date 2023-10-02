@@ -28,7 +28,7 @@ example：
 
 1.  utkcore和utkwidget两个模块中类名必须以U开头，必须使用Q指针和D指针，私有类、私有成员、私有方法不要在头文件中暴露；
 2.  图标规范：深色图标放置目录:/icons/dark/icons/；亮色图标放置目录：/icons/light/icons/；
-3.  翻译文件放置在translations目录下且只上次ts文件；
+3.  翻译文件放置在translations目录下且只上传ts文件；
 4.  代码中使用颜色首选UPalette类以及颜色枚举，禁止直接用色值；
 5.  头文件需要添加注释，方便后续用Doxygen生成文档；
 6.  开发过程中需要图标可以到[阿里巴巴矢量图标库](https://www.iconfont.cn/?spm=a313x.search_index.i3.2.19263a81P9idc9)下载；
