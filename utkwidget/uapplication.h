@@ -29,9 +29,9 @@ public:
 
     void loadFont(const QFont &font);
 
-    void loadTranslator(const QString &path, const QLocale::Language &language = QLocale::system().language());
+    QLocale::Language currentLanguage() const;
 
-    void loadTranslator(const QStringList &path, const QLocale::Language &language = QLocale::system().language());
+    void loadTranslator(const QString &path, const QLocale::Language &language = QLocale::system().language());
 
     void changeTranslator(const QLocale::Language &language);
 

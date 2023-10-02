@@ -17,6 +17,8 @@ protected:
     void init();
     void initItems();
 
+    void changeEvent(QEvent *event) override;
+
 private:
     QStandardItemModel *m_model = Q_NULLPTR;
     TiTleStyledDelegate *m_itemDelegate = Q_NULLPTR;

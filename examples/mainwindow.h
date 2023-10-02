@@ -11,6 +11,7 @@ class QStackedWidget;
 class HLListView;
 class TitlesWidget;
 class HLStyleButton;
+class QStandardItemModel;
 class MainWindow : public UMainWindow
 {
     Q_OBJECT
@@ -31,7 +32,8 @@ public:
     
     std::shared_ptr<UMessageResult> test(std::shared_ptr<UMessage> msg);
 
-signals:
+protected:
+    void changeEvent(QEvent *event) override;
 
 public slots:
     void handleAbout();
@@ -47,6 +49,8 @@ private:
     QStackedWidget* m_stackedWidget = Q_NULLPTR;
     TitlesWidget* m_titlesWidget = Q_NULLPTR;
     HLStyleButton* m_backBtn = Q_NULLPTR;
+    QList<QAction*> m_actionList;
+    QStandardItemModel* m_model = Q_NULLPTR;
 };
 
 #endif // MAINWINDOW_H

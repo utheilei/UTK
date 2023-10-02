@@ -85,20 +85,38 @@ MainWindow::~MainWindow()
 void MainWindow::initMenu()
 {
     QActionGroup* group = new QActionGroup(this);
+    QActionGroup* languageGroup = new QActionGroup(this);
     HLMenu* menu = new HLMenu(this);
     QAction* about = menu->addAction(tr("About"));
     about->setIcon(QIcon::fromTheme("about"));
+    m_actionList.append(about);
     menu->addSeparator();
     HLMenu* menu1 = new HLMenu(this);
     menu1->setTitle(tr("theme"));
     QAction* dark = menu1->addAction(tr("dark"));
+    m_actionList.append(dark);
     dark->setCheckable(true);
     group->addAction(dark);
     QAction* light = menu1->addAction(tr("light"));
+    m_actionList.append(light);
     light->setCheckable(true);
     group->addAction(light);
-    menu->addMenu(menu1);
+    m_actionList.append(menu->addMenu(menu1));
+
+    HLMenu* languageMenu = new HLMenu(this);
+    languageMenu->setTitle(tr("language"));
+    QAction* chinese = languageMenu->addAction(tr("Chinese"));
+    m_actionList.append(chinese);
+    chinese->setCheckable(true);
+    languageGroup->addAction(chinese);
+    QAction* english = languageMenu->addAction(tr("English"));
+    m_actionList.append(english);
+    english->setCheckable(true);
+    languageGroup->addAction(english);
+    m_actionList.append(menu->addMenu(languageMenu));
+
     QAction* exit = menu->addAction(tr("Exit"));
+    m_actionList.append(exit);
     addMenu(menu);
 
     if (uApp->applicationTheme() == UTheme::DarkTheme)
@@ -108,6 +126,15 @@ void MainWindow::initMenu()
     else
     {
         light->setChecked(true);
+    }
+
+    if (uApp->currentLanguage() == QLocale::Language::Chinese)
+    {
+        chinese->setChecked(true);
+    }
+    else
+    {
+        english->setChecked(true);
     }
 
     connect(about, &QAction::triggered, this, &MainWindow::handleAbout);
@@ -127,6 +154,14 @@ void MainWindow::initMenu()
             style->setTheme(UTheme::LightTheme);
             uApp->setPalette(style->standardPalette());
         }
+    });
+    connect(chinese, &QAction::triggered, this, [ = ]()
+    {
+        uApp->changeTranslator(QLocale::Language::Chinese);
+    });
+    connect(english, &QAction::triggered, this, [ = ]()
+    {
+        uApp->changeTranslator(QLocale::Language::English);
     });
 }
 
@@ -164,15 +199,15 @@ void MainWindow::initListView()
         QObject::tr("developing 8"), QObject::tr("developing 9"), QObject::tr("developing 10")
     };
 
-    QStandardItemModel* model = new QStandardItemModel(this);
-    m_listview->setModel(model);
+    m_model = new QStandardItemModel(this);
+    m_listview->setModel(m_model);
 
     for (int i = 0; i < textList.size(); i++)
     {
         QStandardItem* item = new QStandardItem(textList.at(i));
         item->setIcon(UWidgetUtils::getNumCircleIcon(i + 1, QFont("SimHei", 14)));
         item->setSizeHint(QSize(160, 50));
-        model->appendRow(item);
+        m_model->appendRow(item);
     }
 }
 
@@ -224,6 +259,31 @@ std::shared_ptr<UMessageResult> MainWindow::test(std::shared_ptr<UMessage> msg)
 {
     qDebug() << msg->msgId << msg->msgType << msg->msgData << QThread::currentThreadId();
     return std::make_shared<UMessageResult>(true, "aaa");
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange) {
+        const QVector<QString> textList = {tr("About"),tr("dark"),tr("light"),tr("theme"),
+                                           tr("Chinese"), tr("English"), tr("language"),tr("Exit")};
+        for (int i = 0; i < m_actionList.size(); i++)
+        {
+            m_actionList[i]->setText(textList[i]);
+        }
+        const QVector<QString> leftList =
+        {
+            QObject::tr("Label"), QObject::tr("Button"), QObject::tr("LineEdit"), QObject::tr("datetime"),
+            QObject::tr("developing"), QObject::tr("developing 1"), QObject::tr("developing 2"), QObject::tr("developing 3"),
+            QObject::tr("developing 4"), QObject::tr("developing 5"), QObject::tr("developing 6"), QObject::tr("developing 7"),
+            QObject::tr("developing 8"), QObject::tr("developing 9"), QObject::tr("developing 10")
+        };
+        for (int i = 0; i < leftList.size(); i++)
+        {
+            m_model->item(i, 0)->setText(leftList[i]);
+        }
+    } else {
+        UMainWindow::changeEvent(event);
+    }
 }
 
 void MainWindow::handleAbout()

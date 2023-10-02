@@ -1,6 +1,7 @@
 #include "titleswidget.h"
 #include "widgets/delegate.h"
 
+#include <QEvent>
 #include <QHBoxLayout>
 #include <QStandardItemModel>
 
@@ -52,6 +53,25 @@ void TitlesWidget::initItems()
     for (int i = 0; i < textList.size(); i++)
     {
         addItem(QIcon::fromTheme(iconList.at(i)), textList[i]);
+    }
+}
+
+void TitlesWidget::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange) {
+        const QVector<QString> textList =
+        {
+            QObject::tr("Label"), QObject::tr("Button"), QObject::tr("LineEdit"), QObject::tr("datetime"),
+            QObject::tr("developing"), QObject::tr("developing 1"), QObject::tr("developing 2"), QObject::tr("developing 3"),
+            QObject::tr("developing 4"), QObject::tr("developing 5"), QObject::tr("developing 6"), QObject::tr("developing 7"),
+            QObject::tr("developing 8"), QObject::tr("developing 9"), QObject::tr("developing 10")
+        };
+        for (int i = 0; i < textList.size(); i++)
+        {
+            m_model->item(i, 0)->setText(textList[i]);
+        }
+    } else {
+        HLListView::changeEvent(event);
     }
 }
 

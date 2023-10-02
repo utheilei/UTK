@@ -29,6 +29,7 @@ private:
     QMainWindow* m_mainWindow = nullptr;
     QTranslator translator;
     QString translationPath;
+    QLocale::Language languageType = QLocale::Language::Chinese;
     UAboutDialog* dialog = nullptr;
 };
 
@@ -100,12 +101,19 @@ void UApplication::loadFont(const QFont &font)
     setFont(font);
 }
 
+QLocale::Language UApplication::currentLanguage() const
+{
+    Q_D(const UApplication);
+    return d->languageType;
+}
+
 void UApplication::loadTranslator(const QString &path, const QLocale::Language &language)
 {
     Q_D(UApplication);
 
     d->translationPath = path;
-    qInfo() << "translation filePath:" << d->translationPath;
+    d->languageType = language;
+    qInfo() << "translation filePath:" << d->translationPath << "Language:" << d->languageType;
     QString translatorFileName = "";
 
     if (QLocale::Language::English == language)
