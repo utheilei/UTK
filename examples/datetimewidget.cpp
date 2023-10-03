@@ -6,8 +6,10 @@
 #include <QBoxLayout>
 
 DateTimeWidget::DateTimeWidget(QWidget *parent)
-    : QWidget(parent)
+    : UWidget(parent)
 {
+    setBackgroundRole(QPalette::Base);
+    setRadius(8);
     QVBoxLayout *vLayout = new QVBoxLayout;
     QHBoxLayout *hLayout = new QHBoxLayout;
 

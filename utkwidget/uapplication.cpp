@@ -2,6 +2,7 @@
 #include "logger/simplelog.h"
 #include "uaboutdialog.h"
 #include "style/uproxystyle.h"
+#include "uapplicationsettings.h"
 
 #include <QTextCodec>
 #include <QTranslator>
@@ -78,7 +79,13 @@ void UApplication::setApplicationTheme(const UTheme::ThemeType &type)
 
     QString searchPath = QLatin1String(":/icons");
     QIcon::setThemeSearchPaths(QStringList() << searchPath);
-    auto style = new UProxyStyle();
+    UProxyStyle *style = qobject_cast<UProxyStyle*>(uApp->style());
+    if (nullptr == style) {
+        style = new UProxyStyle();
+        connect(style, &UProxyStyle::themeChanged, this, [](const UTheme::ThemeType &type) {
+            UApplicationSettings::instance()->setApplicationTheme(type);
+        });
+    }
     style->setTheme(type);
     d->setApplicationStyle(style);
 }
@@ -148,6 +155,7 @@ void UApplication::changeTranslator(const QLocale::Language &language)
     Q_D(UApplication);
 
     loadTranslator(d->translationPath, language);
+    UApplicationSettings::instance()->setApplicationLanguage(language);
 }
 
 UPalette* UApplication::applicationPalette()

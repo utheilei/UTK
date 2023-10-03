@@ -45,7 +45,7 @@ void UWidget::setRadius(int radius)
 void UWidget::setBackgroundColor(const QBrush &brush)
 {
     auto palette = this->palette();
-    palette.setBrush(QPalette::Window, brush);
+    palette.setBrush(backgroundRole(), brush);
     setPalette(palette);
 }
 
@@ -60,8 +60,8 @@ void UWidget::paintEvent(QPaintEvent* event)
         rectPath.addRoundedRect(rect, m_radius, m_radius);
     else
         rectPath.addRect(rect);
-    painter.setPen(QPen(palette().color(QPalette::Window), 1));
-    painter.setBrush(palette().color(QPalette::Window));
+    painter.setPen(QPen(palette().color(backgroundRole()), 1));
+    painter.setBrush(palette().color(backgroundRole()));
     painter.drawPath(rectPath);
 
     if (m_isOpen)

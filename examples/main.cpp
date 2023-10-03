@@ -1,8 +1,10 @@
 #include "mainwindow.h"
 #include "uapplication.h"
+#include "uapplicationsettings.h"
 
 #include <QIcon>
 #include <QDebug>
+#include <QStandardPaths>
 
 int main(int argc, char* argv[])
 {
@@ -25,12 +27,13 @@ int main(int argc, char* argv[])
     font.setFamily("Microsoft YaHei");
     app.loadFont(font);
 
-    app.setApplicationTheme(UTheme::LightTheme);
+    app.setApplicationTheme(UTheme::ThemeType(UApplicationSettings::instance()->applicationTheme()));
     app.setWindowIcon(QIcon::fromTheme("utkwidget"));
     app.setApplicationName(QObject::tr("UTK"));
     app.setApplicationVersion("1.0");
 
-    app.loadTranslator(QString("%1/translations/%2").arg(app.applicationDirPath()).arg("example"), QLocale::Chinese);
+    app.loadTranslator(QString("%1/translations/%2").arg(app.applicationDirPath()).arg("example"),
+                       QLocale::Language(UApplicationSettings::instance()->applicationLanguage()));
 
     qInfo() << "========== Application is start ==========" << Qt::endl;
 

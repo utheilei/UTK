@@ -93,14 +93,15 @@ void MainWindow::initMenu()
     menu->addSeparator();
     HLMenu* menu1 = new HLMenu(this);
     menu1->setTitle(tr("theme"));
-    QAction* dark = menu1->addAction(tr("dark"));
-    m_actionList.append(dark);
-    dark->setCheckable(true);
-    group->addAction(dark);
+
     QAction* light = menu1->addAction(tr("light"));
     m_actionList.append(light);
     light->setCheckable(true);
     group->addAction(light);
+    QAction* dark = menu1->addAction(tr("dark"));
+    m_actionList.append(dark);
+    dark->setCheckable(true);
+    group->addAction(dark);
     m_actionList.append(menu->addMenu(menu1));
 
     HLMenu* languageMenu = new HLMenu(this);
@@ -264,8 +265,8 @@ std::shared_ptr<UMessageResult> MainWindow::test(std::shared_ptr<UMessage> msg)
 void MainWindow::changeEvent(QEvent *event)
 {
     if(event->type() == QEvent::LanguageChange) {
-        const QVector<QString> textList = {tr("About"),tr("dark"),tr("light"),tr("theme"),
-                                           tr("Chinese"), tr("English"), tr("language"),tr("Exit")};
+        const QVector<QString> textList = {tr("About"), tr("light"), tr("dark"), tr("theme"),
+                                           tr("Chinese"), tr("English"), tr("language"), tr("Exit")};
         for (int i = 0; i < m_actionList.size(); i++)
         {
             m_actionList[i]->setText(textList[i]);
@@ -304,7 +305,6 @@ void MainWindow::handleQuit()
 
 void MainWindow::onChangeWidget(const QModelIndex &index)
 {
-    qDebug() << "============" << index.data() << index.row();
     if (m_listWidget.contains(index.row()))
     {
         m_mainWidget->setCurrentIndex(index.row());

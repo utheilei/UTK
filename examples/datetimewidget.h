@@ -1,9 +1,9 @@
 #ifndef DATETIMEWIDGET_H
 #define DATETIMEWIDGET_H
 
-#include <QWidget>
+#include "uwidget.h"
 
-class DateTimeWidget : public QWidget
+class DateTimeWidget : public UWidget
 {
     Q_OBJECT
 public:

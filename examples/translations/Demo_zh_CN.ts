@@ -55,7 +55,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="30"/>
+        <location filename="../main.cpp" line="31"/>
         <source>UTK</source>
         <translation>UTK</translation>
     </message>
