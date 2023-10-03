@@ -27,7 +27,7 @@ example：
 #### 开发规范
 
 1.  utkcore和utkwidget两个模块中类名必须以U开头，必须使用Q指针和D指针，私有类、私有成员、私有方法不要在头文件中暴露；
-2.  图标规范：深色图标放置目录:/icons/dark/icons/；亮色图标放置目录：/icons/light/icons/；
+2.  图标规范：深色图标放置目录:/icons/dark/icons/；亮色图标放置目录：/icons/light/icons/；添加图标文件后，在程序中使用 QIcon::fromTheme(“utk_xxx”) 获取当前主题对应的图标对象，“utk_xxx” 为图标文件名称，不包含文件后缀名；
 3.  翻译文件放置在translations目录下且只上传ts文件；
 4.  代码中使用颜色首选UPalette类以及颜色枚举，禁止直接用色值；
 5.  头文件需要添加注释，方便后续用Doxygen生成文档；
