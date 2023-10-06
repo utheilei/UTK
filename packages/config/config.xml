@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>UTKExample</Name>
+    <Version>1.0.0</Version>
+    <Title>UTKExample</Title>
+    <Publisher>helei</Publisher>
+    <StartMenuDir>UTKExample</StartMenuDir>
+    <TargetDir>@HomeDir@/UTKExample</TargetDir>
+    <WizardStyle>Classic</WizardStyle>
+    <StyleSheet>style.qss</StyleSheet>
+    <TitleColor>#414141</TitleColor>
+	<WizardDefaultWidth>840ex</WizardDefaultWidth>
+	<WizardDefaultHeight>575ex</WizardDefaultHeight>
+</Installer>
