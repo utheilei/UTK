@@ -2,35 +2,41 @@
 #include "widgets/uclockwidget.h"
 #include "widgets/ugaugespeed.h"
 #include "widgets/hlslider.h"
+#include "widgets/uwaterprogress.h"
 
 #include <QBoxLayout>
 
-DateTimeWidget::DateTimeWidget(QWidget *parent)
+DateTimeWidget::DateTimeWidget(QWidget* parent)
     : UWidget(parent)
 {
     setBackgroundRole(QPalette::Base);
     setRadius(8);
-    QVBoxLayout *vLayout = new QVBoxLayout;
-    QHBoxLayout *hLayout = new QHBoxLayout;
 
-    UClockWidget *clockWidget = new UClockWidget(this);
-    UGaugeSpeed *gauge = new UGaugeSpeed(this);
+    QGridLayout* mainLayout = new QGridLayout;
+
+    UClockWidget* clockWidget = new UClockWidget(this);
+    UGaugeSpeed* gauge = new UGaugeSpeed(this);
     gauge->setRadius(150);
-
-    hLayout->addWidget(clockWidget);
-    hLayout->addWidget(gauge);
 
     auto slider = new HLSlider(Qt::Horizontal, this);
     slider->setMaximumWidth(300);
     slider->setMaximumHeight(40);
 
-    vLayout->addLayout(hLayout);
-    vLayout->addWidget(slider);
+    UWaterProgress* progress = new UWaterProgress(this);
+    progress->setMinimumSize(200, 200);
+    progress->start();
 
-    setLayout(vLayout);
+    mainLayout->addWidget(clockWidget, 0, 0);
+    mainLayout->addWidget(gauge, 0, 1);
+    mainLayout->addWidget(slider, 1, 0);
+    mainLayout->addWidget(progress, 1, 1);
 
-    connect(slider, &QSlider::valueChanged, this, [gauge](int value){
+    setLayout(mainLayout);
+
+    connect(slider, &QSlider::valueChanged, this, [gauge, progress](int value)
+    {
         gauge->setValue(value);
+        progress->setValue(value);
     });
 
     slider->setValue(60);
