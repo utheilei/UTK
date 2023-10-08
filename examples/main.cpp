@@ -2,9 +2,17 @@
 #include "uapplication.h"
 #include "uapplicationsettings.h"
 
+#include "crashhandler/crashhandler.h"
+
 #include <QIcon>
 #include <QDebug>
 #include <QStandardPaths>
+
+void crash()
+{
+    volatile int* a = (int*)(NULL);
+    *a = 1;
+}
 
 int main(int argc, char* argv[])
 {
@@ -36,6 +44,14 @@ int main(int argc, char* argv[])
                        QLocale::Language(UApplicationSettings::instance()->applicationLanguage()));
 
     qInfo() << "========== Application is start ==========" << Qt::endl;
+
+    const QString crashReporterPath = QString("%1/dump").arg(app.applicationDirPath());
+    NQExceptionHandler hander(crashReporterPath, []()
+    {
+        qInfo() << "========== crash ==========";
+    });
+
+    crash();
 
     MainWindow w;
     w.setMinimumSize(1200, 800);

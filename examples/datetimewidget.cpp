@@ -23,13 +23,14 @@ DateTimeWidget::DateTimeWidget(QWidget* parent)
     slider->setMaximumHeight(40);
 
     UWaterProgress* progress = new UWaterProgress(this);
-    progress->setMinimumSize(200, 200);
-    progress->start();
+    UWaterProgress* progress1 = progress;
+    progress1->setMinimumSize(200, 200);
+    progress1->start();
 
     mainLayout->addWidget(clockWidget, 0, 0);
     mainLayout->addWidget(gauge, 0, 1);
     mainLayout->addWidget(slider, 1, 0);
-    mainLayout->addWidget(progress, 1, 1);
+    mainLayout->addWidget(progress1, 1, 1);
 
     setLayout(mainLayout);
 
