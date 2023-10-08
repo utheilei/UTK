@@ -38,6 +38,7 @@
 #include "client/windows/common/ipc_protocol.h"
 #include "client/windows/handler/exception_handler.h"
 #include "common/windows/guid_string.h"
+#include "common/string_conversion.h"
 
 namespace google_breakpad
 {
@@ -1016,7 +1017,7 @@ namespace google_breakpad
         bool success = false;
         if (minidump_write_dump_)
         {
-            HANDLE dump_file = CreateFile((char*)next_minidump_path_c_,
+            HANDLE dump_file = CreateFile(ws2s(next_minidump_path_c_).c_str(),
                                           GENERIC_WRITE,
                                           0,  // no sharing
                                           NULL,

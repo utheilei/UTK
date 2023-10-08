@@ -1,4 +1,3 @@
-/*控件窗口阴影发散效果。*/
 #include "ugraphicsgloweffect.h"
 
 QT_BEGIN_NAMESPACE

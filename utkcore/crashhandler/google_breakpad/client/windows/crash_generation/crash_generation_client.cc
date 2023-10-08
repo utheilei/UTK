@@ -31,6 +31,7 @@
 #include <cassert>
 #include <utility>
 #include "client/windows/common/ipc_protocol.h"
+#include "common/string_conversion.h"
 
 namespace google_breakpad
 {
@@ -304,7 +305,8 @@ namespace google_breakpad
 
         for (int i = 0; i < kPipeConnectMaxAttempts; ++i)
         {
-            HANDLE pipe = CreateFile((char*)pipe_name,
+            std::string name = ws2s(pipe_name);
+            HANDLE pipe = CreateFile(name.c_str(),
                                      pipe_access,
                                      0,
                                      NULL,
@@ -324,7 +326,7 @@ namespace google_breakpad
             }
 
             // Cannot continue retrying if wait on pipe fails.
-            if (!WaitNamedPipe((char*)pipe_name, kPipeBusyWaitTimeoutMs))
+            if (!WaitNamedPipe(name.c_str(), kPipeBusyWaitTimeoutMs))
             {
                 break;
             }
@@ -417,7 +419,8 @@ namespace google_breakpad
     {
         for (int i = 0; i < kPipeConnectMaxAttempts; ++i)
         {
-            HANDLE local_pipe = CreateFile((char*)pipe_name, kPipeDesiredAccess,
+            std::string name = ws2s(pipe_name);
+            HANDLE local_pipe = CreateFile(name.c_str(), kPipeDesiredAccess,
                                            0, NULL, OPEN_EXISTING,
                                            kPipeFlagsAndAttributes, NULL);
             if (local_pipe != INVALID_HANDLE_VALUE)
@@ -441,7 +444,7 @@ namespace google_breakpad
                 return INVALID_HANDLE_VALUE;
             }
 
-            if (!WaitNamedPipe((char*)pipe_name, kPipeBusyWaitTimeoutMs))
+            if (!WaitNamedPipe(name.c_str(), kPipeBusyWaitTimeoutMs))
             {
                 return INVALID_HANDLE_VALUE;
             }

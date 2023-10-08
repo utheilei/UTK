@@ -2,6 +2,7 @@
 #define HLSLIDER_H
 
 #include "utkwidget_export.h"
+#include "style/uproxystyle.h"
 
 #include <QSlider>
 

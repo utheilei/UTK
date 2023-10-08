@@ -1,18 +1,11 @@
 #include "mainwindow.h"
 #include "uapplication.h"
 #include "uapplicationsettings.h"
-
-#include "crashhandler/crashhandler.h"
+#include "crashhandler/ucrashhandler.h"
 
 #include <QIcon>
 #include <QDebug>
 #include <QStandardPaths>
-
-void crash()
-{
-    volatile int* a = (int*)(NULL);
-    *a = 1;
-}
 
 int main(int argc, char* argv[])
 {
@@ -46,12 +39,10 @@ int main(int argc, char* argv[])
     qInfo() << "========== Application is start ==========" << Qt::endl;
 
     const QString crashReporterPath = QString("%1/dump").arg(app.applicationDirPath());
-    NQExceptionHandler hander(crashReporterPath, []()
+    UCrashHandler hander(crashReporterPath, []()
     {
-        qInfo() << "========== crash ==========";
+        qCritical() << "========== Application is crash ==========";
     });
-
-    crash();
 
     MainWindow w;
     w.setMinimumSize(1200, 800);

@@ -63,6 +63,10 @@ void UTF32ToUTF16Char(wchar_t in, uint16_t out[2]);
 // Convert |in| to UTF-8.  If |swap| is true, swap bytes before converting.
 string UTF16ToUTF8(const vector<uint16_t> &in, bool swap);
 
+std::string ws2s(const std::wstring& ws);
+
+std::wstring s2ws(const std::string& s);
+
 }  // namespace google_breakpad
 
 #endif  // COMMON_STRING_CONVERSION_H__

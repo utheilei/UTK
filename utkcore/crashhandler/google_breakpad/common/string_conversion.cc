@@ -152,4 +152,28 @@ string UTF16ToUTF8(const vector<uint16_t> &in, bool swap) {
   return "";
 }
 
+string ws2s(const std::wstring &ws)
+{
+    const wchar_t* _Source = ws.c_str();
+    size_t _Dsize = 2 * ws.size() + 1;
+    char *_Dest = new char[_Dsize];
+    memset(_Dest,0,_Dsize);
+    sprintf(_Dest, "%S", _Source);
+    std::string result = _Dest;
+    delete []_Dest;
+    return result;
+}
+
+std::wstring s2ws(const string &s)
+{
+    const char* _Source = s.c_str();
+    size_t _Dsize = s.size() + 1;
+    wchar_t *_Dest = new wchar_t[_Dsize];
+    wmemset(_Dest, 0, _Dsize);
+    swprintf(_Dest, 128, L"%S", _Source);
+    std::wstring result = _Dest;
+    delete []_Dest;
+    return result;
+}
+
 }  // namespace google_breakpad

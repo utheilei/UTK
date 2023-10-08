@@ -113,6 +113,6 @@ set(EXAMPLE_FILES
     "${CMAKE_CURRENT_BINARY_DIR}/translations/example_zh_CN.ts"
 )
 
-#foreach(_ts_file ${EXAMPLE_FILES})
-#    add_custom_command(TARGET Demo PRE_BUILD COMMAND ${LRELEASE_EXECUTABLE} ${_ts_file})
-#endforeach()
+foreach(_ts_file ${EXAMPLE_FILES})
+    add_custom_command(TARGET Demo PRE_BUILD COMMAND ${LRELEASE_EXECUTABLE} ${_ts_file})
+endforeach()

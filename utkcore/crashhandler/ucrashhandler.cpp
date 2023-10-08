@@ -1,4 +1,4 @@
-#include "crashhandler.h"
+#include "ucrashhandler.h"
 
 #include <QDateTime>
 #include <QFile>
@@ -23,6 +23,25 @@ static QDateTime s_startTime;
 static bool s_bIsReport = false;
 static std::function<void()> s_callback = nullptr;
 
+class UCrashHandlerPrivate
+{
+    Q_DECLARE_PUBLIC(UCrashHandler)
+public:
+    UCrashHandlerPrivate(UCrashHandler* parent) : q_ptr(parent){};
+    ~UCrashHandlerPrivate(){};
+
+    UCrashHandler* q_ptr = nullptr;
+
+    void init(const QString &dumpFilePath,
+              const QString &appVersion,
+              const QString &dumpReporterPath,
+              bool bIsReport,
+              const QString &companyShortName,
+              std::function<void()> callback);
+private:
+    google_breakpad::ExceptionHandler* exceptionHandler = nullptr;
+};
+
 /**
  * @brief 获取默认的Dump输出目录
  *
@@ -30,8 +49,8 @@ static std::function<void()> s_callback = nullptr;
  * @param const QString & 公司名称（简称）
  * @return 返回默认的Dump输出目录
  */
-QString NQExceptionHandler::getDumpDirDefault(const QString &appName,
-        const QString &strCompanyShortName)
+QString UCrashHandler::getDumpDirDefault(const QString &appName,
+                                         const QString &strCompanyShortName)
 {
     QString fullDumpPath = QDir::cleanPath(QDir::toNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)));
     QStringList dirNames;
@@ -128,13 +147,13 @@ static bool exceptionHandlerCallback(const google_breakpad::MinidumpDescriptor &
         return succeeded;
 
     const QStringList argumentList =
-    {
-        QString::fromLocal8Bit(descriptor.path()),
-        s_companyName,
-        QCoreApplication::applicationName(),
-        s_appVerion,
-        QCoreApplication::applicationFilePath()
-    };
+        {
+            QString::fromLocal8Bit(descriptor.path()),
+            s_companyName,
+            QCoreApplication::applicationName(),
+            s_appVerion,
+            QCoreApplication::applicationFilePath()
+        };
 
     //软件版本相关信息写入文件
     QString appInfoPath = QString::fromLocal8Bit(descriptor.path()).replace(".dmp", ".txt");
@@ -167,13 +186,13 @@ static bool exceptionHandlerCallback(const char* dump_dir,
                              + QString::fromLocal8Bit(minidump_id) + ".dmp";
 
     const QStringList argumentList =
-    {
-        dumpPath,
-        s_companyName,
-        QCoreApplication::applicationName(),
-        s_appVerion,
-        QCoreApplication::applicationFilePath()
-    };
+        {
+            dumpPath,
+            s_companyName,
+            QCoreApplication::applicationName(),
+            s_appVerion,
+            QCoreApplication::applicationFilePath()
+        };
 
     //软件版本相关信息写入文件
     QString appInfoPath = QString::fromLocal8Bit(dump_dir) + '/'
@@ -210,13 +229,13 @@ static bool exceptionHandlerCallback(const wchar_t* dump_path,
     const QString dumpPath = QString::fromWCharArray(dump_path, int(wcslen(dump_path))) + '/'
                              + QString::fromWCharArray(minidump_id, int(wcslen(minidump_id))) + ".dmp";
     const QStringList argumentList =
-    {
-        dumpPath,
-        s_companyName,
-        QCoreApplication::applicationName(),
-        s_appVerion,
-        QCoreApplication::applicationFilePath()
-    };
+        {
+            dumpPath,
+            s_companyName,
+            QCoreApplication::applicationName(),
+            s_appVerion,
+            QCoreApplication::applicationFilePath()
+        };
 
     //软件版本相关信息写入文件
     QString appInfoPath = QString::fromWCharArray(dump_path, int(wcslen(dump_path))) + '/'
@@ -249,41 +268,12 @@ static bool exceptionHandlerCallback(const wchar_t* dump_path,
  * @param NQExceptionHandler::CrashCallback 回调函数（软件崩溃时关闭Log日志）
  * @return 返回默认的Dump输出目录
  */
-NQExceptionHandler::NQExceptionHandler(const QString &dumpFilePath,
-                                       std::function<void()> callback,
-                                       const QString &dumpReporterPath,
-                                       bool bIsReport,
-                                       const QString &appVersion,
-                                       const QString &companyShortName)
-{
-    init(dumpFilePath, appVersion, dumpReporterPath, bIsReport, companyShortName, callback);
-}
-
-NQExceptionHandler::~NQExceptionHandler()
-{
-    if (m_exceptionHandler)
-    {
-        delete m_exceptionHandler;
-        m_exceptionHandler = nullptr;
-    }
-}
-
-/**
- * @brief 构造函数，启动捕获日志进程
- * @param const QString & 需要保存的Dump文件路径
- * @param const QString & 公司名称（简称）
- * @param const QString & 软件版本信息
- * @param const QString & Dump上传exe路径
- * @param bool 是否上传Dump
- * @param NQExceptionHandler::CrashCallback 回调函数（软件崩溃时关闭Log日志）
- * @return 返回默认的Dump输出目录
- */
-void NQExceptionHandler::init(const QString &dumpFilePath,
-                              const QString &appVersion,
-                              const QString &dumpReporterPath,
-                              bool bIsReport,
-                              const QString &companyShortName,
-                              std::function<void()> callback)
+void UCrashHandlerPrivate::init(const QString &dumpFilePath,
+                                const QString &appVersion,
+                                const QString &dumpReporterPath,
+                                bool bIsReport,
+                                const QString &companyShortName,
+                                std::function<void()> callback)
 {
     s_startTime = QDateTime::currentDateTime();
     s_companyName = companyShortName;
@@ -292,7 +282,7 @@ void NQExceptionHandler::init(const QString &dumpFilePath,
     s_bIsReport = bIsReport;
     s_callback = callback;
 
-    if (!isDirExist(dumpFilePath) || m_exceptionHandler != nullptr)
+    if (!isDirExist(dumpFilePath) || exceptionHandler != nullptr)
     {
         qDebug() << "NQExceptionHandler initialization failed!";
         return;
@@ -315,11 +305,45 @@ void NQExceptionHandler::init(const QString &dumpFilePath,
         true,
         NULL);
 #elif defined(Q_OS_WIN)
-    m_exceptionHandler = new google_breakpad::ExceptionHandler(
+    exceptionHandler = new google_breakpad::ExceptionHandler(
         dumpFilePath.toStdWString(),
         NULL,
         exceptionHandlerCallback,
         NULL,
         google_breakpad::ExceptionHandler::HANDLER_ALL);
 #endif
+}
+
+/**
+ * @brief 构造函数，启动捕获日志进程
+ * @param const QString & 需要保存的Dump文件路径
+ * @param const QString & 公司名称（简称）
+ * @param const QString & 软件版本信息
+ * @param const QString & Dump上传exe路径
+ * @param bool 是否上传Dump
+ * @param NQExceptionHandler::CrashCallback 回调函数（软件崩溃时关闭Log日志）
+ * @return 返回默认的Dump输出目录
+ */
+UCrashHandler::UCrashHandler(const QString &dumpFilePath,
+                             std::function<void()> callback,
+                             const QString &dumpReporterPath,
+                             bool bIsReport,
+                             const QString &appVersion,
+                             const QString &companyShortName)
+    : d_ptr(new UCrashHandlerPrivate(this))
+{
+    Q_D(UCrashHandler);
+
+    d->init(dumpFilePath, appVersion, dumpReporterPath, bIsReport, companyShortName, callback);
+}
+
+UCrashHandler::~UCrashHandler()
+{
+    Q_D(UCrashHandler);
+
+    if (d->exceptionHandler)
+    {
+        delete d->exceptionHandler;
+        d->exceptionHandler = nullptr;
+    }
 }

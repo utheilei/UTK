@@ -40,6 +40,7 @@
 #include "client/windows/common/auto_critical_section.h"
 #include "common/scoped_ptr.h"
 #include "common/windows/guid_string.h"
+#include "common/string_conversion.h"
 
 using std::wstring;
 
@@ -517,7 +518,7 @@ namespace google_breakpad
             return false;
         }
 
-        dump_file_ = CreateFile((char*)dump_file_path.c_str(),
+        dump_file_ = CreateFile(ws2s(dump_file_path).c_str(),
                                 GENERIC_WRITE,
                                 0,
                                 NULL,
@@ -557,7 +558,7 @@ namespace google_breakpad
         full_dump_file_path.resize(full_dump_file_path.size() - 4);  // strip .dmp
         full_dump_file_path.append(L"-full.dmp");
 
-        full_dump_file_ = CreateFile((char*)full_dump_file_path.c_str(),
+        full_dump_file_ = CreateFile(ws2s(full_dump_file_path).c_str(),
                                      GENERIC_WRITE,
                                      0,
                                      NULL,
