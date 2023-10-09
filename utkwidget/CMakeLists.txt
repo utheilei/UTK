@@ -1,11 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
-
-#set(CMAKE_PREFIX_PATH /Users/linwei/qt/5.11.1/clang_64/lib/cmake)
-# Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-# Instruct CMake to run moc automatically when needed
 set(CMAKE_AUTOMOC ON)
-# Create code from a list of Qt designer ui files
 set(CMAKE_AUTOUIC ON)
 
 add_definitions(-DUTKWIDGET_LIBRARY)
@@ -45,6 +40,7 @@ FILE(GLOB HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/singleapplication/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/logger/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/zip/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/modelview/*.h
 )
 
 FILE(GLOB SOURCES
@@ -55,6 +51,7 @@ FILE(GLOB SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/singleapplication/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/logger/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/zip/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/modelview/*.cpp
 )
 
 qt5_add_resources(qrc_FILES ${CMAKE_CURRENT_SOURCE_DIR}/resouces.qrc)

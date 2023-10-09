@@ -57,5 +57,9 @@
         <file>icons/light/icons/sub_menu.svg</file>
         <file>icons/light/icons/about.svg</file>
         <file>icons/dark/icons/about.svg</file>
+        <file>icons/light/icons/utk_collapse.svg</file>
+        <file>icons/light/icons/utk_expand.svg</file>
+        <file>icons/dark/icons/utk_collapse.svg</file>
+        <file>icons/dark/icons/utk_expand.svg</file>
     </qresource>
 </RCC>

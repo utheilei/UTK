@@ -12,6 +12,7 @@
 #include "titleswidget.h"
 #include "titlebar.h"
 #include "datetimewidget.h"
+#include "viewwidget.h"
 
 #include <message/UMessageDispatcher>
 #include <thread/UThread>
@@ -70,8 +71,9 @@ MainWindow::MainWindow(QWidget* parent)
     int code = UMessageDispatcher::instance()->postMessage(1, std::make_shared<UMessage>(1, 1, "test"));
     qDebug() << res->msgCode << res->msgResult << code;
 
-    QThread *thread = UThread::createFuture<std::shared_ptr<UMessageResult>>(std::bind(&MainWindow::test, this, std::make_shared<UMessage>()));
-    connect(thread, &QThread::finished, this, [=](){
+    QThread* thread = UThread::createFuture<std::shared_ptr<UMessageResult>>(std::bind(&MainWindow::test, this, std::make_shared<UMessage>()));
+    connect(thread, &QThread::finished, this, [ = ]()
+    {
         auto s = dynamic_cast<QThreadCreateTaskThread<std::shared_ptr<UMessageResult>>*>(sender());
         qDebug() << "UThread finished" << s->getResult()->msgResult;
     });
@@ -241,6 +243,10 @@ void MainWindow::initContent()
     DateTimeWidget* dateTimeWidget = new DateTimeWidget(this);
     m_mainWidget->addWidget(dateTimeWidget);
     m_listWidget.insert(3, dateTimeWidget);
+
+    ViewWidget* viewWidget = new ViewWidget(this);
+    m_mainWidget->addWidget(viewWidget);
+    m_listWidget.insert(4, viewWidget);
 }
 
 void MainWindow::initConnection()
@@ -262,11 +268,13 @@ std::shared_ptr<UMessageResult> MainWindow::test(std::shared_ptr<UMessage> msg)
     return std::make_shared<UMessageResult>(true, "aaa");
 }
 
-void MainWindow::changeEvent(QEvent *event)
+void MainWindow::changeEvent(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange) {
+    if (event->type() == QEvent::LanguageChange)
+    {
         const QVector<QString> textList = {tr("About"), tr("light"), tr("dark"), tr("theme"),
-                                           tr("Chinese"), tr("English"), tr("language"), tr("Exit")};
+                                           tr("Chinese"), tr("English"), tr("language"), tr("Exit")
+                                          };
         for (int i = 0; i < m_actionList.size(); i++)
         {
             m_actionList[i]->setText(textList[i]);
@@ -282,7 +290,9 @@ void MainWindow::changeEvent(QEvent *event)
         {
             m_model->item(i, 0)->setText(leftList[i]);
         }
-    } else {
+    }
+    else
+    {
         UMainWindow::changeEvent(event);
     }
 }
