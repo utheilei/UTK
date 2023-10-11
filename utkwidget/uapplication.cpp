@@ -79,6 +79,7 @@ void UApplication::setApplicationTheme(const UTheme::ThemeType &type)
 
     QString searchPath = QLatin1String(":/icons");
     QIcon::setThemeSearchPaths(QStringList() << searchPath);
+    QIcon::setFallbackSearchPaths(QStringList() << searchPath);
     UProxyStyle *style = qobject_cast<UProxyStyle*>(uApp->style());
     if (nullptr == style) {
         style = new UProxyStyle();

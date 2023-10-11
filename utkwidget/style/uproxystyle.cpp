@@ -36,6 +36,7 @@ void UProxyStyle::setTheme(const UTheme::ThemeType &type)
     m_theme.setTheme(type);
     QString themeName(m_theme.themeName());
     QIcon::setThemeName(themeName);
+    QIcon::setFallbackThemeName(themeName);
     emit themeChanged(type);
 }
 

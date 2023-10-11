@@ -289,7 +289,7 @@ void UCrashHandlerPrivate::init(const QString &dumpFilePath,
     }
 
 #if defined(Q_OS_LINUX)
-    m_exceptionHandler = new google_breakpad::ExceptionHandler(
+    exceptionHandler = new google_breakpad::ExceptionHandler(
         google_breakpad::MinidumpDescriptor(dumpFilePath.toStdString()),
         NULL,
         exceptionHandlerCallback,
@@ -297,7 +297,7 @@ void UCrashHandlerPrivate::init(const QString &dumpFilePath,
         true,
         -1);
 #elif defined(Q_OS_MACOS)
-    m_exceptionHandler = new google_breakpad::ExceptionHandler(
+    exceptionHandler = new google_breakpad::ExceptionHandler(
         dumpFilePath.toStdString(),
         NULL,
         exceptionHandlerCallback,

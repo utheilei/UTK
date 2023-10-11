@@ -91,8 +91,10 @@ QtLockedFile::~QtLockedFile()
 {
     if (isOpen())
         unlock();
+#ifdef Q_OS_WIN
     if (wmutex)
         CloseHandle(wmutex);
+#endif
 }
 
 bool QtLockedFile::open(OpenMode mode)
@@ -126,7 +128,7 @@ QtLockedFile::LockMode QtLockedFile::lockMode() const
 {
     return m_lock_mode;
 }
-
+#ifdef Q_OS_WIN
 Qt::HANDLE QtLockedFile::getMutexHandle(int idx, bool doCreate)
 {
     if (mutexname.isEmpty())
@@ -181,7 +183,7 @@ bool QtLockedFile::waitMutex(Qt::HANDLE mutex, bool doBlock)
     }
     return false;
 }
-
+#endif
 bool QtLockedFile::lock(LockMode mode, bool block)
 {
     if (!isOpen())

@@ -9,23 +9,23 @@ SET(SOURCES
 IF(UNIX)
 SET(SOURCES
     ${SOURCES}
-    ${BREAKPAD_SOURCE_DIR}/src/client/minidump_file_writer.cc
-    ${BREAKPAD_SOURCE_DIR}/src/client/linux/log/log.cc
-    ${BREAKPAD_SOURCE_DIR}/src/client/linux/handler/exception_handler.cc
-    ${BREAKPAD_SOURCE_DIR}/src/client/linux/handler/minidump_descriptor.cc
-    ${BREAKPAD_SOURCE_DIR}/src/common/linux/guid_creator.cc
-    ${BREAKPAD_SOURCE_DIR}/src/client/linux/dump_writer_common/thread_info.cc
-    ${BREAKPAD_SOURCE_DIR}/src/client/linux/dump_writer_common/ucontext_reader.cc
-    ${BREAKPAD_SOURCE_DIR}/src/client/linux/minidump_writer/linux_dumper.cc
-    ${BREAKPAD_SOURCE_DIR}/src/client/linux/minidump_writer/minidump_writer.cc
-    ${BREAKPAD_SOURCE_DIR}/src/client/linux/minidump_writer/linux_ptrace_dumper.cc
-    ${BREAKPAD_SOURCE_DIR}/src/client/linux/microdump_writer/microdump_writer.cc
-    ${BREAKPAD_SOURCE_DIR}/src/common/linux/file_id.cc
-    ${BREAKPAD_SOURCE_DIR}/src/common/linux/elfutils.cc
-    ${BREAKPAD_SOURCE_DIR}/src/common/linux/linux_libc_support.cc
-    ${BREAKPAD_SOURCE_DIR}/src/common/linux/memory_mapped_file.cc
-    ${BREAKPAD_SOURCE_DIR}/src/common/linux/safe_readlink.cc
-    ${BREAKPAD_SOURCE_DIR}/src/client/linux/crash_generation/crash_generation_client.cc
+    ${CMAKE_CURRENT_LIST_DIR}/client/minidump_file_writer.cc
+    ${CMAKE_CURRENT_LIST_DIR}/client/linux/log/log.cc
+    ${CMAKE_CURRENT_LIST_DIR}/client/linux/handler/exception_handler.cc
+    ${CMAKE_CURRENT_LIST_DIR}/client/linux/handler/minidump_descriptor.cc
+    ${CMAKE_CURRENT_LIST_DIR}/common/linux/guid_creator.cc
+    ${CMAKE_CURRENT_LIST_DIR}/client/linux/dump_writer_common/thread_info.cc
+    ${CMAKE_CURRENT_LIST_DIR}/client/linux/dump_writer_common/ucontext_reader.cc
+    ${CMAKE_CURRENT_LIST_DIR}/client/linux/minidump_writer/linux_dumper.cc
+    ${CMAKE_CURRENT_LIST_DIR}/client/linux/minidump_writer/minidump_writer.cc
+    ${CMAKE_CURRENT_LIST_DIR}/client/linux/minidump_writer/linux_ptrace_dumper.cc
+    ${CMAKE_CURRENT_LIST_DIR}/client/linux/microdump_writer/microdump_writer.cc
+    ${CMAKE_CURRENT_LIST_DIR}/common/linux/file_id.cc
+    ${CMAKE_CURRENT_LIST_DIR}/common/linux/elfutils.cc
+    ${CMAKE_CURRENT_LIST_DIR}/common/linux/linux_libc_support.cc
+    ${CMAKE_CURRENT_LIST_DIR}/common/linux/memory_mapped_file.cc
+    ${CMAKE_CURRENT_LIST_DIR}/common/linux/safe_readlink.cc
+    ${CMAKE_CURRENT_LIST_DIR}/client/linux/crash_generation/crash_generation_client.cc
 )
 ENDIF()
 
