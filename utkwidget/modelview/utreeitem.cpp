@@ -154,6 +154,16 @@ void UTreeItem::removeAllChildren()
     }
 }
 
+bool UTreeItem::checked()
+{
+    return m_checked;
+}
+
+void UTreeItem::setChecked(bool isChecked)
+{
+    m_checked = isChecked;
+}
+
 void UTreeItem::setIcon(const QIcon &icon)
 {
     m_icon = icon;

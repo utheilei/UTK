@@ -26,12 +26,24 @@ QVariant UTreeModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    if (role != Qt::DisplayRole && role != Qt::EditRole)
-        return QVariant();
-
+    QVariant data;
     UTreeItem* item = getItem(index);
+    switch (role) {
+    case Qt::DisplayRole:
+        data = item->data(index.column());
+        break;
+    case Qt::DecorationRole:
+        data = QVariant::fromValue(item->icon());
+        break;
+    case Qt::CheckStateRole:
+        data = item->checked();
+        break;
+    default:
+        data = QVariant();
+        break;
+    }
 
-    return item->data(index.column());
+    return data;
 }
 
 Qt::ItemFlags UTreeModel::flags(const QModelIndex &index) const

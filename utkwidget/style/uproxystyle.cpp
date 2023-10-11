@@ -2,13 +2,11 @@
 #include "upalette.h"
 
 #include <qdrawutil.h>
-#include <QDebug>
 #include <QPixmap>
-#include <QPixmapCache>
 #include <QPainter>
-#include <QStyleOption>
 #include <QStyleOptionMenuItem>
 #include <QPainterPath>
+#include <QApplication>
 
 namespace
 {
@@ -63,6 +61,10 @@ int UProxyStyle::pixelMetric(QStyle::PixelMetric metric,
                              const QStyleOption* option,
                              const QWidget* widget) const
 {
+    if (metric > QStyle::PM_CustomBase)
+    {
+        return pixelMetric(static_cast<UPixelMetric>(metric), option, widget);
+    }
     switch (metric)
     {
         case QStyle::PM_MenuScrollerHeight:
@@ -85,7 +87,28 @@ int UProxyStyle::pixelMetric(QStyle::PixelMetric metric,
             return 8;
         default:
             return QProxyStyle::pixelMetric(metric, option, widget);
+        }
+}
+
+int UProxyStyle::pixelMetric(UPixelMetric metric, const QStyleOption *option, const QWidget *widget) const
+{
+    switch (metric)
+    {
+    case UProxyStyle::PM_FocusBorderWidth:
+        return 1;
+    case UProxyStyle::PM_FocusBorderSpacing:
+        return 6;
+    case UProxyStyle::PM_FrameRadius:
+        return 8;
+    case UProxyStyle::PM_ShadowRadius:
+        return 10;
+    case UProxyStyle::PM_FrameMargins:
+        return 9;
+    default:
+        break;
     }
+
+    return -1;
 }
 
 void UProxyStyle::drawControl(QStyle::ControlElement element,
@@ -183,6 +206,18 @@ void UProxyStyle::drawPrimitive(QStyle::PrimitiveElement element,
             painter->fillPath(path, option->palette.brush(QPalette::Base));
             break;
         }
+        case PE_PanelItemViewRow:
+        {
+            if (const QStyleOptionViewItem *vopt = qstyleoption_cast<const QStyleOptionViewItem *>(option)) {
+                QPalette::ColorGroup cg = colorGroup(vopt, widget);
+                if ((vopt->state & QStyle::State_Selected) &&
+                    proxy()->styleHint(QStyle::SH_ItemView_ShowDecorationSelected, option, widget))
+                    painter->fillPath(backgroundPath(*vopt, 8), vopt->palette.brush(cg, QPalette::Highlight));
+                else if (vopt->features & QStyleOptionViewItem::Alternate)
+                    painter->fillPath(backgroundPath(*vopt, 8), vopt->palette.brush(cg, QPalette::AlternateBase));
+            }
+            break;
+        }
         default:
             QProxyStyle::drawPrimitive(element, option, painter, widget);
             break;
@@ -273,7 +308,59 @@ void UProxyStyle::drawComplexControl(UComplexControl control, const QStyleOption
             break;
         default:
             break;
+        }
+}
+
+QPalette::ColorGroup UProxyStyle::colorGroup(const QStyleOption *option, const QWidget *widget)
+{
+    bool isEnabled = widget ? widget->isEnabled() : (option->state & QStyle::State_Enabled);
+    QPalette::ColorGroup group;
+    if (!isEnabled)
+        group = QPalette::Disabled;
+    else
+        group = !QApplication::activeWindow() ? QPalette::Inactive : QPalette::Active;
+
+    return group;
+}
+
+QPainterPath UProxyStyle::backgroundPath(const QStyleOptionViewItem &option, int radius)
+{
+    QPainterPath path;
+    QRect rect = option.rect;
+    switch (option.viewItemPosition) {
+    case QStyleOptionViewItem::ViewItemPosition::Beginning:
+    {
+        path.addRoundedRect(rect, radius, radius);
+        rect.setX(rect.width()/2);
+        QPainterPath addPath;
+        addPath.addRect(rect);
+        path = path.united(addPath);
+        break;
     }
+    case QStyleOptionViewItem::ViewItemPosition::Middle:
+    {
+        path.addRect(rect);
+        break;
+    }
+    case QStyleOptionViewItem::ViewItemPosition::End:
+    {
+        path.addRoundedRect(rect, radius, radius);
+        rect.setWidth(rect.width()/2);
+        QPainterPath addPath;
+        addPath.addRect(rect);
+        path = path.united(addPath);
+        break;
+    }
+    case QStyleOptionViewItem::ViewItemPosition::OnlyOne:
+    {
+        path.addRoundedRect(rect, radius, radius);
+        break;
+    }
+    default:
+        break;
+    }
+
+    return path;
 }
 
 void UProxyStyle::drawMenuItem(const QStyleOptionMenuItem* menuItem,

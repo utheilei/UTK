@@ -4,6 +4,9 @@
 #include "modelview/utreeview.h"
 
 #include <QHBoxLayout>
+#include <QStandardItemModel>
+#include <QStandardItem>
+#include <QHeaderView>
 
 ViewWidget::ViewWidget(QWidget* parent) : UWidget(parent)
 {
@@ -26,8 +29,12 @@ ViewWidget::ViewWidget(QWidget* parent) : UWidget(parent)
     for (int i = 0; i < 1; i++)
     {
         UTreeItem* item = new UTreeItem(data, model->rootItem());
+        item->setIcon(QIcon::fromTheme("utk_notice"));
+        item->setChecked(true);
         UTreeItem* item1 = new UTreeItem(data22, model->rootItem());
+        item1->setIcon(QIcon::fromTheme("utk_notice"));
         UTreeItem* item2 = new UTreeItem(inputData, model->rootItem());
+        item2->setIcon(QIcon::fromTheme("utk_notice"));
         item->appendChild(new UTreeItem(data1, item));
         item->appendChild(new UTreeItem(data2, item));
         item1->appendChild(new UTreeItem(data3, item1));
@@ -39,8 +46,24 @@ ViewWidget::ViewWidget(QWidget* parent) : UWidget(parent)
 
     view->expandAll();
 
-    QHBoxLayout* mainLayout = new QHBoxLayout;
+    UTreeView* tableView = new UTreeView(this);
+//    tableView->header()->setVisible(true);
+    tableView->setRootIsDecorated(false);
+    QStandardItemModel *standardItemModel = new QStandardItemModel(tableView);
+    tableView->setModel(standardItemModel);
+    QStringList list = {"1", "2", "3"};
+    standardItemModel->setHorizontalHeaderLabels(list);
+    for (int var = 0; var < 10; ++var) {
+        QStandardItem *item = new QStandardItem(QString("QStandardItem%1").arg(var));
+        QStandardItem *item1 = new QStandardItem("b");
+        QStandardItem *item2 = new QStandardItem("c");
+        QList<QStandardItem*> list = {item, item1, item2};
+        standardItemModel->appendRow(list);
+    }
+
+    QVBoxLayout* mainLayout = new QVBoxLayout;
     mainLayout->addWidget(view);
+    mainLayout->addWidget(tableView);
     setLayout(mainLayout);
 }
 

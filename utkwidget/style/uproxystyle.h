@@ -7,6 +7,7 @@
 #include <QProxyStyle>
 
 class QStyleOptionMenuItem;
+class QStyleOptionViewItem;
 class UTKWIDGET_EXPORT UProxyStyle : public QProxyStyle
 {
     Q_OBJECT
@@ -57,6 +58,9 @@ public:
     int pixelMetric(PixelMetric metric, const QStyleOption* option = nullptr,
                     const QWidget* widget = nullptr) const override;
 
+    int pixelMetric(UPixelMetric metric, const QStyleOption* option = nullptr,
+                    const QWidget* widget = nullptr) const;
+
     void drawControl(ControlElement element, const QStyleOption* option,
                      QPainter* painter, const QWidget* widget) const override;
 
@@ -74,6 +78,11 @@ public:
 
     void drawComplexControl(UComplexControl control, const QStyleOptionComplex* option,
                             QPainter* painter, const QWidget* widget = nullptr) const;
+
+    static QPalette::ColorGroup colorGroup(const QStyleOption* option, const QWidget* widget = nullptr);
+
+    static QPainterPath backgroundPath(const QStyleOptionViewItem &option, int radius);
+
 signals:
     void themeChanged(const UTheme::ThemeType &type);
 

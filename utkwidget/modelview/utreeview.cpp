@@ -1,4 +1,6 @@
 #include "utreeview.h"
+#include "ustyleditemdelegate.h"
+#include "widgets/uscrollbar.h"
 
 #include <QHeaderView>
 #include <QKeyEvent>
@@ -34,9 +36,15 @@ void UTreeViewPrivate::initUi()
 
     q->setMouseTracking(true);
     q->viewport()->setMouseTracking(true);
-    //    TreeViewDelegate *delegate = new TreeViewDelegate(q);
-    //    q->setItemDelegate(delegate);
+    UStyledItemDelegate *delegate = new UStyledItemDelegate(q);
+    q->setItemDelegate(delegate);
 
+    auto hScrollBar = new UScrollBar(q);
+    q->setHorizontalScrollBar(hScrollBar);
+    auto vScrollBar = new UScrollBar(q);
+    q->setVerticalScrollBar(vScrollBar);
+
+    q->setAlternatingRowColors(true);
     q->setVerticalScrollMode(QAbstractItemView::ScrollMode::ScrollPerItem);
     q->setFrameShape(QFrame::NoFrame);
     q->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -110,7 +118,9 @@ void UTreeView::drawBranches(QPainter* painter, const QRect &rect, const QModelI
 
     if (!icon.isNull())
     {
-        icon.paint(painter, rect, Qt::AlignCenter);
+        QRect iconRect = QRect(rect.x() + (rect.width() - iconWidth)/2, rect.y() + (rect.height() - iconWidth)/2,
+                               iconWidth, iconWidth);
+        icon.paint(painter, iconRect, Qt::AlignCenter);
     }
 
     painter->restore();

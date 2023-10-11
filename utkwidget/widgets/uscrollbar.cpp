@@ -85,6 +85,7 @@ void UScrollBar::paintEvent(QPaintEvent* event)
 
     UStylePainter painter(this);
     painter.setOpacity(m_opacity);
+    option.palette.setBrush(QPalette::Window, palette().color(backgroundRole()));
     painter.drawComplexControl(UProxyStyle::UComplexControl::CC_UScrollBar, option);
 }
 

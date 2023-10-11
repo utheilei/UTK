@@ -34,6 +34,10 @@ public:
 
     void removeAllChildren();
 
+    bool checked();
+
+    void setChecked(bool isChecked);
+
     inline QIcon icon() const
     {
         return m_icon;
@@ -57,6 +61,7 @@ private:
     QVector<QVariant> itemData;
     UTreeItem* parentItem;
     QIcon m_icon = QIcon();
+    bool m_checked = false;
 };
 
 #endif // UTREEITEM_H
