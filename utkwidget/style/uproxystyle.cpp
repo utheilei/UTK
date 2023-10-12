@@ -88,34 +88,32 @@ int UProxyStyle::pixelMetric(QStyle::PixelMetric metric,
             return 8;
         default:
             return QProxyStyle::pixelMetric(metric, option, widget);
-        }
+    }
 }
 
-int UProxyStyle::pixelMetric(UPixelMetric metric, const QStyleOption *option, const QWidget *widget) const
+int UProxyStyle::pixelMetric(UPixelMetric metric, const QStyleOption* option, const QWidget* widget) const
 {
     switch (metric)
     {
-    case UProxyStyle::PM_FocusBorderWidth:
-        return 1;
-    case UProxyStyle::PM_FocusBorderSpacing:
-        return 6;
-    case UProxyStyle::PM_FrameRadius:
-        return 8;
-    case UProxyStyle::PM_ShadowRadius:
-        return 10;
-    case UProxyStyle::PM_FrameMargins:
-        return 9;
-    default:
-        break;
+        case UProxyStyle::PM_FocusBorderWidth:
+            return 1;
+        case UProxyStyle::PM_FocusBorderSpacing:
+            return 6;
+        case UProxyStyle::PM_FrameRadius:
+            return 8;
+        case UProxyStyle::PM_ShadowRadius:
+            return 10;
+        case UProxyStyle::PM_FrameMargins:
+            return 9;
+        default:
+            break;
     }
 
     return -1;
 }
 
-void UProxyStyle::drawControl(QStyle::ControlElement element,
-                              const QStyleOption* option,
-                              QPainter* painter,
-                              const QWidget* widget) const
+void UProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOption* option,
+                              QPainter* painter, const QWidget* widget) const
 {
     if (element > QStyle::CE_CustomBase)
     {
@@ -173,7 +171,45 @@ void UProxyStyle::drawControl(QStyle::ControlElement element,
 
 void UProxyStyle::drawControl(UControlElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const
 {
-
+    switch (element)
+    {
+        case CE_RadioButton:
+        case CE_CheckBox:
+            if (const QStyleOptionButton* btn = qstyleoption_cast<const QStyleOptionButton*>(option))
+            {
+                bool isRadio = (element == CE_RadioButton);
+                QStyleOptionButton subopt = *btn;
+                subopt.rect = subElementRect(isRadio ? SE_RadioButtonIndicator
+                                             : SE_CheckBoxIndicator, btn, widget);
+                subopt.rect = subopt.rect.adjusted(1, 0, 0, 0);
+                drawPrimitive(isRadio ? PE_IndicatorRadioButton : PE_IndicatorCheckBox,
+                              &subopt, painter, widget);
+                subopt.rect = subElementRect(isRadio ? SE_RadioButtonContents
+                                             : SE_CheckBoxContents, btn, widget);
+                subopt.rect = subopt.rect.adjusted(1, 0, 0, 0);
+                uint alignment = visualAlignment(subopt.direction, Qt::AlignLeft | Qt::AlignVCenter);
+                QPixmap pix;
+                QRect textRect = subopt.rect;
+                if (!subopt.icon.isNull())
+                {
+                    QWindow* window = widget ? widget->window()->windowHandle() : nullptr;
+                    pix = subopt.icon.pixmap(window, subopt.iconSize, subopt.state & State_Enabled ? QIcon::Normal : QIcon::Disabled);
+                    drawItemPixmap(painter, subopt.rect, alignment, pix);
+                    if (subopt.direction == Qt::RightToLeft)
+                        textRect.setRight(textRect.right() - subopt.iconSize.width() - 4);
+                    else
+                        textRect.setLeft(textRect.left() + subopt.iconSize.width() + 4);
+                }
+                if (!subopt.text.isEmpty())
+                {
+                    drawItemText(painter, textRect, alignment | Qt::TextShowMnemonic,
+                                 subopt.palette, subopt.state & State_Enabled, subopt.text, QPalette::WindowText);
+                }
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 void UProxyStyle::drawPrimitive(QStyle::PrimitiveElement element,
@@ -209,7 +245,8 @@ void UProxyStyle::drawPrimitive(QStyle::PrimitiveElement element,
         }
         case PE_PanelItemViewRow:
         {
-            if (const QStyleOptionViewItem *vopt = qstyleoption_cast<const QStyleOptionViewItem *>(option)) {
+            if (const QStyleOptionViewItem* vopt = qstyleoption_cast<const QStyleOptionViewItem*>(option))
+            {
                 QPalette::ColorGroup cg = colorGroup(vopt, widget);
                 if ((vopt->state & QStyle::State_Selected) &&
                     proxy()->styleHint(QStyle::SH_ItemView_ShowDecorationSelected, option, widget))
@@ -227,7 +264,75 @@ void UProxyStyle::drawPrimitive(QStyle::PrimitiveElement element,
 
 void UProxyStyle::drawPrimitive(UPrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const
 {
-
+    switch (element)
+    {
+        case PE_IndicatorCheckBox:
+        {
+            QRect rect = option->rect;
+            painter->setRenderHint(QPainter::Antialiasing);
+            painter->setPen(Qt::NoPen);
+            painter->setBrush(option->palette.brush(QPalette::Button));
+            painter->drawRoundedRect(rect, 2, 2);
+            if (option->state & State_On)
+            {
+                painter->setPen(QPen(option->palette.brush(QPalette::WindowText), 2));
+                painter->drawLine(rect.x() + 3, rect.center().y(), rect.center().x(), rect.y() + rect.height() - 4);
+                painter->drawLine(rect.center().x(), rect.y() + rect.height() - 4, rect.x() + rect.width() - 3, rect.y() + rect.height() / 4);
+            }
+            else if (option->state & State_NoChange)
+            {
+                painter->setPen(QPen(option->palette.brush(QPalette::WindowText), 2));
+                painter->drawLine(rect.x() + 3, rect.center().y(), rect.x() + rect.width() - 3, rect.center().y());
+            }
+            QColor color;
+            if (option->state & State_Sunken)
+            {
+                color = option->palette.color(QPalette::Highlight);
+            }
+            else if (option->state & State_MouseOver)
+            {
+                color = option->palette.color(QPalette::WindowText);
+            }
+            if (color.isValid())
+            {
+                painter->setPen(QPen(color, 1));
+                painter->setBrush(Qt::NoBrush);
+                painter->drawRoundedRect(rect, 2, 2);
+            }
+            break;
+        }
+        case PE_IndicatorRadioButton:
+        {
+            QRectF rect = QRectF(0.5, 0.5, option->rect.width(), option->rect.width());
+            painter->setRenderHints(QPainter::Antialiasing);
+            QColor color = option->palette.color(QPalette::WindowText);
+            if (option->state & State_Sunken)
+            {
+                color = option->palette.color(QPalette::Highlight).darker(120);
+            }
+            else if (option->state & State_MouseOver)
+            {
+                color = option->palette.color(QPalette::Highlight);
+            }
+            if (option->state & State_On)
+            {
+                painter->setBrush(color);
+                painter->setPen(Qt::NoPen);
+                painter->drawEllipse(rect.adjusted(2, 2, -2, -2));
+            }
+            else if (option->state & State_NoChange)
+            {
+                painter->setPen(QPen(color, 2));
+                painter->drawLine(QPointF(rect.x() + 3, rect.center().y()), QPointF(rect.x() + rect.width() - 3, rect.center().y()));
+            }
+            painter->setPen(QPen(color));
+            painter->setBrush(Qt::NoBrush);
+            painter->drawEllipse(rect);
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 void UProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex* option, QPainter* painter, const QWidget* widget) const
@@ -309,10 +414,10 @@ void UProxyStyle::drawComplexControl(UComplexControl control, const QStyleOption
             break;
         default:
             break;
-        }
+    }
 }
 
-QPalette::ColorGroup UProxyStyle::colorGroup(const QStyleOption *option, const QWidget *widget)
+QPalette::ColorGroup UProxyStyle::colorGroup(const QStyleOption* option, const QWidget* widget)
 {
     bool isEnabled = widget ? widget->isEnabled() : (option->state & QStyle::State_Enabled);
     QPalette::ColorGroup group;
@@ -328,37 +433,38 @@ QPainterPath UProxyStyle::backgroundPath(const QStyleOptionViewItem &option, int
 {
     QPainterPath path;
     QRect rect = option.rect;
-    switch (option.viewItemPosition) {
-    case QStyleOptionViewItem::ViewItemPosition::Beginning:
+    switch (option.viewItemPosition)
     {
-        path.addRoundedRect(rect, radius, radius);
-        rect.setX(rect.width()/2);
-        QPainterPath addPath;
-        addPath.addRect(rect);
-        path = path.united(addPath);
-        break;
-    }
-    case QStyleOptionViewItem::ViewItemPosition::Middle:
-    {
-        path.addRect(rect);
-        break;
-    }
-    case QStyleOptionViewItem::ViewItemPosition::End:
-    {
-        path.addRoundedRect(rect, radius, radius);
-        rect.setWidth(rect.width()/2);
-        QPainterPath addPath;
-        addPath.addRect(rect);
-        path = path.united(addPath);
-        break;
-    }
-    case QStyleOptionViewItem::ViewItemPosition::OnlyOne:
-    {
-        path.addRoundedRect(rect, radius, radius);
-        break;
-    }
-    default:
-        break;
+        case QStyleOptionViewItem::ViewItemPosition::Beginning:
+        {
+            path.addRoundedRect(rect, radius, radius);
+            rect.setX(rect.width() / 2);
+            QPainterPath addPath;
+            addPath.addRect(rect);
+            path = path.united(addPath);
+            break;
+        }
+        case QStyleOptionViewItem::ViewItemPosition::Middle:
+        {
+            path.addRect(rect);
+            break;
+        }
+        case QStyleOptionViewItem::ViewItemPosition::End:
+        {
+            path.addRoundedRect(rect, radius, radius);
+            rect.setWidth(rect.width() / 2);
+            QPainterPath addPath;
+            addPath.addRect(rect);
+            path = path.united(addPath);
+            break;
+        }
+        case QStyleOptionViewItem::ViewItemPosition::OnlyOne:
+        {
+            path.addRoundedRect(rect, radius, radius);
+            break;
+        }
+        default:
+            break;
     }
 
     return path;

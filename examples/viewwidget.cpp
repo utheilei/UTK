@@ -47,16 +47,17 @@ ViewWidget::ViewWidget(QWidget* parent) : UWidget(parent)
     view->expandAll();
 
     UTreeView* tableView = new UTreeView(this);
-//    tableView->header()->setVisible(true);
+    //    tableView->header()->setVisible(true);
     tableView->setRootIsDecorated(false);
-    QStandardItemModel *standardItemModel = new QStandardItemModel(tableView);
+    QStandardItemModel* standardItemModel = new QStandardItemModel(tableView);
     tableView->setModel(standardItemModel);
     QStringList list = {"1", "2", "3"};
     standardItemModel->setHorizontalHeaderLabels(list);
-    for (int var = 0; var < 10; ++var) {
-        QStandardItem *item = new QStandardItem(QString("QStandardItem%1").arg(var));
-        QStandardItem *item1 = new QStandardItem("b");
-        QStandardItem *item2 = new QStandardItem("c");
+    for (int var = 0; var < 10; ++var)
+    {
+        QStandardItem* item = new QStandardItem(QString("QStandardItem%1").arg(var));
+        QStandardItem* item1 = new QStandardItem("b");
+        QStandardItem* item2 = new QStandardItem("c");
         QList<QStandardItem*> list = {item, item1, item2};
         standardItemModel->appendRow(list);
     }

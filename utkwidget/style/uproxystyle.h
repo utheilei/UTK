@@ -15,13 +15,17 @@ class UTKWIDGET_EXPORT UProxyStyle : public QProxyStyle
 public:
     enum UPrimitiveElement
     {
-        PE_ItemBackground = QStyle::PE_CustomBase + 100
+        PE_ItemBackground = QStyle::PE_CustomBase + 100,
+        PE_IndicatorCheckBox,
+        PE_IndicatorRadioButton
     };
     Q_ENUM(UPrimitiveElement)
 
     enum UControlElement
     {
-        CE_UIconButton = QStyle::CE_CustomBase + 100
+        CE_UIconButton = QStyle::CE_CustomBase + 100,
+        CE_RadioButton,
+        CE_CheckBox
     };
     Q_ENUM(UControlElement)
 
